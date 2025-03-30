@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books4Cash</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="naglowek-kontener">
+            <img src="Books4Cash.com.png" alt="Books4Cash.com" class="logo">
+            <div class="przyciski-naglowka">
+                <button id="przycisk-logowania">
+                    <img src="Ikony/login.png" alt="Zaloguj się" class="ikona"> Zaloguj się
+                </button>
+                <button id="przycisk-koszyka">
+                    <img src="Ikony/cart.png" alt="Koszyk" class="ikona"> Koszyk
+                </button>
+            </div>
+        </div>
+        <nav>
+            <ul class="menu-nawigacyjne">
+                <li><a href="#">Strona główna</a></li>
+                <li><a href="#">O nas</a></li>
+                <li><a href="#">Bestsellery</a></li>
+                <li><a href="#">Kontakt</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        
+        <section class="sekcja-wyszukiwania">
+
+            <h2>Wyszukaj książki</h2>
+
+            <form id="formularz-wyszukiwania">
+                <input type="text" id="pole-wyszukiwania" placeholder="Szukaj po tytule lub autorze">
+                <select id="filtr-kategoria">
+                    <option value="">Wszystkie kategorie</option>
+                    <option value="gry">Gaming</option>
+                    <option value="mlodziDorosli">Młodzi dorośli</option>
+                    <option value="poradniki">Poradniki</option>
+                    <option value="fantastyka">Fantasy</option>
+                </select>
+
+                <select id="filtr-okladka">
+                    <option value="">Rodzaj okładki</option>
+                    <option value="twarda">Twarda</option>
+                    <option value="miekka">Miękka</option>
+                </select>
+
+                <input type="number" id="filtr-strony-min" placeholder="Minimalna liczba stron" min="0">
+                <input type="number" id="filtr-strony-max" placeholder="Maksymalna liczba stron" min="0">
+                <input type="number" id="filtr-cena-min" placeholder="Minimalna cena" min="0">
+                <input type="number" id="filtr-cena-max" placeholder="Maksymalna cena" min="0">
+                <button type="submit">Szukaj</button>
+
+
+            </form>
+        </section>
+
+        <section class="sekcja-lista-ksiazek">
+
+            <h3>Dostępne pozycje:</h3>
+
+            <ul id="lista-ksiazek">
+
+                <li class="element-ksiazka">
+                    <img src="Okladki/1.png" alt="Książka 1" class="zdjecie-ksiazki">
+                    <div class="szczegoly-ksiazki">
+                        <h3>Minecraft: Podręcznik walki</h3>
+                        <p>Autor: Mojang</p>
+                        <p>Cena: 10,99 zł</p>
+                    </div>
+                </li>
+
+                <li class="element-ksiazka">
+                    <img src="Okladki/2.jpg" alt="Książka 2" class="zdjecie-ksiazki">
+                    <div class="szczegoly-ksiazki">
+                        <h3>Zmierzch</h3>
+                        <p>Autor: Stephenie Meyer</p>
+                        <p>Cena: 15,49 zł</p>
+                    </div>
+                </li>
+
+                <li class="element-ksiazka">
+                    <img src="Okladki/3.jpeg" alt="Książka 3" class="zdjecie-ksiazki">
+                    <div class="szczegoly-ksiazki">
+                        <h3>Pięć nocy u Frediego: Srebrne oczy</h3>
+                        <p>Autor: Scott Cawthon</p>
+                        <p>Cena: 10,99 zł</p>
+                    </div>
+                </li>
+
+            </ul>
+        </section>
+
+        <section class="sekcja-dodaj-ksiazke">
+            <button id="add-book-btn">Dodaj nową książkę</button>
+        </section>
+
+    </main>
+
+    <footer>
+
+        <p>&copy; 2025 Books4Cash. Wszelkie prawa zastrzeżone.</p>
+        <ul class="linki-stopki">
+            <li><a href="#">Polityka prywatności</a></li>
+            <li><a href="#">Regulamin</a></li>
+            <li><a href="#">Pomoc</a></li>
+        </ul>
+    </footer>
+
+
+
+</body>
+</html>
