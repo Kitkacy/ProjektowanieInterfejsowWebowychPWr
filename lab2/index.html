@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo-inator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="naglowek-kontener">
+            <h1>ToDo-inator</h1>
+            <ul class="menu-nawigacyjne"></ul>
+        </div>
+    </header>
+
+    <main>
+        <section>
+            <h2>Moje zadania</h2>
+            
+            <form id="formularz-zadan">
+                <input type="text" id="wejscie-zadania" placeholder="Wpisz nowe zadanie..." required>
+                <select id="wybor-listy">
+                    <option value="mało-pilne">Mało pilne</option>
+                    <option value="pilne">Pilne</option>
+                    <option value="na-wczoraj">Na wczoraj</option>
+                </select>
+                <button type="submit">Dodaj zadanie</button>
+            </form>
+
+            <div id="kontener-tworzenia-listy">
+                <form id="formularz-listy">
+                    <input type="text" id="wejscie-listy" placeholder="Nazwa nowej listy" required>
+                    <button type="submit">Utwórz nową listę</button>
+                </form>
+            </div>
+
+            <div id="kontener-wyszukiwania">
+                <input type="text" id="wejscie-szukania" placeholder="Szukaj w zadaniach...">
+                <label style="display: flex; align-items: center; gap: 5px;">
+                    <input type="checkbox" id="przelacznik-wielkosci-liter" checked>
+                    <img src="caseSENS.jpeg" alt="Ikona rozróżniania wielkości liter" style="width: 20px; height: 20px;">
+                </label>
+            </div>
+
+
+            <div id="kontener-list">
+                <div class="sekcja-listy-zadan" data-list-id="mało-pilne">
+                    <h3 class="naglowek-listy">Mało pilne <span class="ikona-zwijania">▼</span></h3>
+                    <ul class="lista-zadan"></ul>
+                </div>
+                <div class="sekcja-listy-zadan" data-list-id="pilne">
+                    <h3 class="naglowek-listy">Pilne <span class="ikona-zwijania">▼</span></h3>
+                    <ul class="lista-zadan"></ul>
+                </div>
+                <div class="sekcja-listy-zadan" data-list-id="na-wczoraj">
+                    <h3 class="naglowek-listy">Na wczoraj <span class="ikona-zwijania">▼</span></h3>
+                    <ul class="lista-zadan"></ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>ToDo-inator ©</p>
+    </footer>
+
+    <div id="modal" class="modal ukryty">
+        <div class="zawartosc-modala">
+            <p id="tekst-modala"></p>
+            <div class="przyciski-modala">
+                <button id="potwierdz-usuniecie">Tak</button>
+                <button id="anuluj-usuniecie">Nie</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
