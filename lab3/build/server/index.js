@@ -71,109 +71,126 @@ function withErrorBoundaryProps(ErrorBoundary3) {
 const initialBooks = [
   {
     id: 1,
-    title: "Introduction to Computer Science",
+    title: "How to Talk to Your Cat About Gun Safety",
     author: "John Smith",
     price: 45.99,
     condition: "Like New",
-    category: "Computer Science",
-    description: "A comprehensive introduction to the fundamentals of computer science.",
+    category: "Guns",
+    description: "Do you love your cat? Well, no self-respecting cat mom or dad would let their baby grow up without a solid grounding in gun safety.",
     publishYear: 2021,
     pages: 450,
     language: "English",
-    format: "Paperback"
+    format: "Paperback",
+    cover: "/images/covers/1.png",
+    hasCover: true
   },
   {
     id: 2,
-    title: "Principles of Economics",
+    title: "How to Survive a Garden Gnome Attack",
     author: "Sarah Johnson",
     price: 38.5,
     condition: "Good",
-    category: "Economics",
-    description: "Core economic principles and theories explained for undergraduate students.",
+    category: "Guides",
+    description: "Crucial survival information when dealing with one of the world’s smallest menaces.",
     publishYear: 2020,
     pages: 380,
     language: "English",
-    format: "Hardcover"
+    format: "Hardcover",
+    cover: "/images/covers/2.png",
+    hasCover: true
   },
   {
     id: 3,
-    title: "Organic Chemistry",
+    title: "Eating People is Wrong",
     author: "Michael Brown",
     price: 52.75,
     condition: "Very Good",
-    category: "Chemistry",
-    description: "An in-depth guide to organic chemistry concepts for science majors.",
+    category: "Psychology",
+    description: "The all in one book for the person on the fence.",
     publishYear: 2019,
     pages: 520,
     language: "English",
-    format: "Paperback"
+    format: "Paperback",
+    cover: "/images/covers/3.png",
+    hasCover: true
   },
   {
     id: 4,
-    title: "Calculus for Beginners",
+    title: "Crafting with Cat Hair: Cute Handicrafts to Make with Your Cat",
     author: "Emily Chen",
     price: 34.99,
     condition: "Good",
-    category: "Mathematics",
-    description: "Introduction to calculus with step-by-step problem-solving approaches.",
+    category: "Guides",
+    description: "Have you been storing your cat’s hair, waiting for your moment? Well, your moment is now.",
     publishYear: 2022,
     pages: 310,
     language: "English",
-    format: "Paperback"
+    format: "Paperback",
+    cover: "/images/covers/4.jpg",
+    hasCover: true
   },
   {
     id: 5,
-    title: "World History: A Modern Perspective",
+    title: "The Field Guide to Dumb Birds of North America",
     author: "David Wilson",
     price: 42.25,
     condition: "Like New",
-    category: "History",
-    description: "A contemporary examination of world history and cultural developments.",
+    category: "Guides",
+    description: "You may be outwitted by the smart ones, but these ones are more in your grasp.",
     publishYear: 2021,
     pages: 620,
     language: "English",
-    format: "Hardcover"
+    format: "Hardcover",
+    cover: "/images/covers/5.jpg",
+    hasCover: true
   },
   {
     id: 6,
-    title: "Introduction to Psychology",
+    title: "How to Raise Your I.Q. by Eating Gifted Children",
     author: "Jennifer Adams",
     price: 29.99,
     condition: "Acceptable",
     category: "Psychology",
-    description: "Foundational concepts in psychology for undergraduate students.",
+    description: "Children are the new Super Food.",
     publishYear: 2018,
     pages: 350,
     language: "English",
-    format: "Digital"
+    format: "Digital",
+    cover: "/images/covers/6.jpg",
+    hasCover: true
   },
   {
     id: 7,
-    title: "Physics: Principles and Applications",
+    title: "Microwave for One",
     author: "Robert Taylor",
     price: 48.5,
     condition: "Very Good",
-    category: "Physics",
-    description: "Physical principles explained with real-world applications.",
+    category: "Cooking",
+    description: "Microwave cooking turned all the way up to 1.",
     publishYear: 2020,
     pages: 480,
     language: "English",
-    format: "Paperback"
+    format: "Paperback",
+    cover: "/images/covers/7.jpg",
+    hasCover: true
   },
   {
     id: 8,
-    title: "Marketing Fundamentals",
+    title: "Extreme Ironing",
     author: "Amanda Lewis",
     price: 36.75,
     condition: "Good",
-    category: "Business",
-    description: "Core marketing concepts for business students.",
+    category: "Sports",
+    description: "For the adrenaline junky looking to get their fix in this modern crazy world.",
     publishYear: 2019,
     pages: 290,
     language: "English",
-    format: "Digital"
+    format: "Digital",
+    cover: "/images/covers/8.jpg",
+    hasCover: true
   }
 ];
+const DEFAULT_COVER = "/images/covers/book-default-cover.jpg";
 const BookContext = createContext();
 function BookProvider({ children }) {
   const [books, setBooks] = useState(initialBooks);
@@ -194,7 +211,9 @@ function BookProvider({ children }) {
   const addBook = (book) => {
     const newBook = {
       ...book,
-      id: books.length + 1
+      id: books.length + 1,
+      cover: DEFAULT_COVER,
+      hasCover: false
     };
     setBooks([...books, newBook]);
   };
@@ -281,7 +300,8 @@ function BookProvider({ children }) {
         resetFilters,
         filterOptions,
         addBook,
-        removeBook
+        removeBook,
+        DEFAULT_COVER
       },
       children
     }
@@ -290,7 +310,7 @@ function BookProvider({ children }) {
 function useBooks() {
   return useContext(BookContext);
 }
-const stylesheet = "/assets/app-Daz0EdG5.css";
+const stylesheet = "/assets/app-Bc2KzXGw.css";
 const links = () => [{
   rel: "preconnect",
   href: "https://fonts.googleapis.com"
@@ -310,6 +330,7 @@ function Layout({
 }) {
   return /* @__PURE__ */ jsxs("html", {
     lang: "en",
+    className: "h-full",
     children: [/* @__PURE__ */ jsxs("head", {
       children: [/* @__PURE__ */ jsx("meta", {
         charSet: "utf-8"
@@ -318,6 +339,7 @@ function Layout({
         content: "width=device-width, initial-scale=1"
       }), /* @__PURE__ */ jsx(Meta, {}), /* @__PURE__ */ jsx(Links, {})]
     }), /* @__PURE__ */ jsxs("body", {
+      className: "min-h-full flex flex-col bg-white",
       children: [/* @__PURE__ */ jsx(BookProvider, {
         children
       }), /* @__PURE__ */ jsx(ScrollRestoration, {}), /* @__PURE__ */ jsx(Scripts, {})]
@@ -353,6 +375,20 @@ const route0 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProper
   default: root,
   links
 }, Symbol.toStringTag, { value: "Module" }));
+function BookCover({ book, className }) {
+  const { DEFAULT_COVER: DEFAULT_COVER2 } = useBooks();
+  if (book.hasCover) {
+    return /* @__PURE__ */ jsx("div", { className: "w-full h-full flex justify-center bg-gray-100", children: /* @__PURE__ */ jsx(
+      "img",
+      {
+        src: book.cover,
+        alt: `Cover of ${book.title}`,
+        className: className || "h-full object-contain"
+      }
+    ) });
+  }
+  return /* @__PURE__ */ jsx("div", { className: `flex items-center justify-center bg-gray-100 ${className || "w-full h-full"}`, children: /* @__PURE__ */ jsx("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-16 w-16 text-gray-400", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: /* @__PURE__ */ jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" }) }) });
+}
 function FilterOptions({ isOpen, toggleFilters }) {
   const { filters, updateFilters, resetFilters, filterOptions } = useBooks();
   const [localPriceRange, setLocalPriceRange] = useState(filters.priceRange);
@@ -377,7 +413,7 @@ function FilterOptions({ isOpen, toggleFilters }) {
           "button",
           {
             onClick: resetFilters,
-            className: "text-gray-500 hover:text-blue-600 text-sm mr-4",
+            className: "text-gray-500 hover:text-green-600 text-sm mr-4",
             children: "Reset"
           }
         ),
@@ -385,7 +421,7 @@ function FilterOptions({ isOpen, toggleFilters }) {
           "button",
           {
             onClick: toggleFilters,
-            className: "text-gray-500 hover:text-blue-600",
+            className: "text-gray-500 hover:text-green-600",
             children: /* @__PURE__ */ jsx("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ jsx("path", { fillRule: "evenodd", d: "M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z", clipRule: "evenodd" }) })
           }
         )
@@ -467,7 +503,7 @@ function FilterOptions({ isOpen, toggleFilters }) {
             min: "0",
             value: localPriceRange.min,
             onChange: (e) => handlePriceChange("min", e.target.value),
-            className: "w-16 p-2 border rounded text-sm",
+            className: "w-16 p-2 border rounded-lg text-sm",
             placeholder: "Min"
           }
         ) }),
@@ -479,7 +515,7 @@ function FilterOptions({ isOpen, toggleFilters }) {
             min: "0",
             value: localPriceRange.max,
             onChange: (e) => handlePriceChange("max", e.target.value),
-            className: "w-16 p-2 border rounded text-sm",
+            className: "w-16 p-2 border rounded-lg text-sm",
             placeholder: "Max"
           }
         ) }),
@@ -487,7 +523,7 @@ function FilterOptions({ isOpen, toggleFilters }) {
           "button",
           {
             onClick: applyPriceRange,
-            className: "bg-blue-600 text-white px-3 py-1 rounded text-sm",
+            className: "bg-green-600 text-white px-3 py-1 rounded-lg text-sm",
             children: "Apply"
           }
         )
@@ -515,7 +551,7 @@ function SearchBar() {
           value: query,
           onChange: (e) => setQuery(e.target.value),
           placeholder: "Search by title, author or category...",
-          className: "w-full py-2 px-4 focus:outline-none"
+          className: "w-full py-2 px-4 focus:outline-none rounded-l-lg"
         }
       ),
       /* @__PURE__ */ jsx(
@@ -523,7 +559,7 @@ function SearchBar() {
         {
           type: "button",
           onClick: toggleFilters,
-          className: "px-2 py-2 text-gray-500 hover:text-blue-600",
+          className: "px-2 py-2 text-gray-500 hover:text-green-600",
           title: "Show filters",
           children: /* @__PURE__ */ jsx("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: /* @__PURE__ */ jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" }) })
         }
@@ -532,7 +568,7 @@ function SearchBar() {
         "button",
         {
           type: "submit",
-          className: "bg-blue-600 text-white px-4 py-2 hover:bg-blue-700",
+          className: "bg-green-600 text-white px-4 py-2 hover:bg-green-700 rounded-r-lg",
           children: /* @__PURE__ */ jsx("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: /* @__PURE__ */ jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" }) })
         }
       )
@@ -553,17 +589,17 @@ function SearchResults() {
         searchResults.length,
         ")"
       ] }),
-      hasActiveFilters && /* @__PURE__ */ jsx("span", { className: "text-sm text-blue-600", children: "Filters applied" })
+      hasActiveFilters && /* @__PURE__ */ jsx("span", { className: "text-sm text-green-600", children: "Filters applied" })
     ] }),
     /* @__PURE__ */ jsx("div", { className: "bg-white rounded-lg border shadow-sm", children: searchResults.map((book) => /* @__PURE__ */ jsxs("div", { className: "border-b p-4 flex justify-between items-center", children: [
       /* @__PURE__ */ jsxs("div", { children: [
         /* @__PURE__ */ jsx("h4", { className: "font-medium", children: book.title }),
         /* @__PURE__ */ jsx("p", { className: "text-gray-600 text-sm", children: book.author }),
         /* @__PURE__ */ jsxs("div", { className: "flex gap-2 text-xs mt-1", children: [
-          /* @__PURE__ */ jsx("span", { className: "bg-gray-100 px-2 py-1 rounded", children: book.category }),
-          /* @__PURE__ */ jsx("span", { className: "bg-gray-100 px-2 py-1 rounded", children: book.condition }),
-          /* @__PURE__ */ jsx("span", { className: "bg-gray-100 px-2 py-1 rounded", children: book.format }),
-          /* @__PURE__ */ jsx("span", { className: "bg-gray-100 px-2 py-1 rounded", children: book.publishYear })
+          /* @__PURE__ */ jsx("span", { className: "bg-gray-100 px-2 py-1 rounded-lg", children: book.category }),
+          /* @__PURE__ */ jsx("span", { className: "bg-gray-100 px-2 py-1 rounded-lg", children: book.condition }),
+          /* @__PURE__ */ jsx("span", { className: "bg-gray-100 px-2 py-1 rounded-lg", children: book.format }),
+          /* @__PURE__ */ jsx("span", { className: "bg-gray-100 px-2 py-1 rounded-lg", children: book.publishYear })
         ] }),
         /* @__PURE__ */ jsxs("p", { className: "text-gray-500 text-xs mt-1", children: [
           book.pages,
@@ -571,13 +607,13 @@ function SearchResults() {
         ] })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-end", children: [
-        /* @__PURE__ */ jsxs("span", { className: "font-bold text-green-600", children: [
+        /* @__PURE__ */ jsxs("span", { className: "font-bold text-lg text-green-600", children: [
           "$",
           book.price.toFixed(2)
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "flex gap-2 mt-2", children: [
-          /* @__PURE__ */ jsx("button", { className: "text-blue-600 text-sm hover:underline", children: "View Details" }),
-          /* @__PURE__ */ jsx("button", { className: "text-yellow-600 text-sm hover:underline", children: "Edit" }),
+          /* @__PURE__ */ jsx("button", { className: "text-green-600 text-sm hover:underline", children: "View Details" }),
+          /* @__PURE__ */ jsx("button", { className: "text-green-600 text-sm hover:underline", children: "Edit" }),
           /* @__PURE__ */ jsx(
             "button",
             {
@@ -593,34 +629,29 @@ function SearchResults() {
 }
 function Welcome() {
   const { featuredBooks } = useBooks();
-  return /* @__PURE__ */ jsxs("main", { className: "flex flex-col items-center pt-4 pb-4", children: [
-    /* @__PURE__ */ jsxs("header", { className: "w-full bg-blue-700 text-white p-4 flex justify-between items-center", children: [
-      /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
-        /* @__PURE__ */ jsx("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-8 w-8", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ jsx("path", { d: "M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.38A7.968 7.968 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.969 7.969 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" }) }),
-        /* @__PURE__ */ jsx("h1", { className: "text-2xl font-bold", children: "Books4Cash" })
-      ] }),
-      /* @__PURE__ */ jsx("nav", { children: /* @__PURE__ */ jsxs("ul", { className: "flex gap-6 items-center", children: [
+  return /* @__PURE__ */ jsxs("main", { className: "flex flex-col items-center", children: [
+    /* @__PURE__ */ jsx("header", { className: "w-full bg-green-700 text-white p-4 flex justify-between items-center", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 max-w-6xl mx-auto w-full", children: [
+      /* @__PURE__ */ jsx("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-8 w-8", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ jsx("path", { d: "M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.38A7.968 7.968 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.969 7.969 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" }) }),
+      /* @__PURE__ */ jsx("h1", { className: "text-2xl font-bold", children: "Books4Cash.io" }),
+      /* @__PURE__ */ jsx("nav", { className: "ml-auto", children: /* @__PURE__ */ jsxs("ul", { className: "flex gap-6 items-center", children: [
         /* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx("a", { href: "#", className: "hover:underline", children: "Buy" }) }),
         /* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx("a", { href: "#", className: "hover:underline", children: "Sell" }) }),
         /* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx("a", { href: "#", className: "hover:underline", children: "About" }) }),
         /* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx("a", { href: "#", className: "hover:underline", children: "Contact" }) }),
-        /* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx("button", { className: "bg-white text-blue-700 px-3 py-1 rounded hover:bg-blue-50", children: "Login" }) })
+        /* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx("button", { className: "bg-white text-green-700 px-3 py-1 rounded-lg hover:bg-green-50", children: "Login" }) })
       ] }) })
-    ] }),
-    /* @__PURE__ */ jsxs("div", { className: "w-full bg-gray-50 p-12 text-center", children: [
+    ] }) }),
+    /* @__PURE__ */ jsxs("div", { className: "w-full bg-gray-50 p-12 text-center rounded-lg mt-4 mb-4", children: [
       /* @__PURE__ */ jsx("h2", { className: "text-4xl font-bold mb-4", children: "Turn Your Books Into Cash" }),
-      /* @__PURE__ */ jsx("p", { className: "text-xl text-gray-700 mb-6", children: "Buy and sell used textbooks at the best prices" }),
-      /* @__PURE__ */ jsxs("div", { className: "flex gap-4 justify-center", children: [
-        /* @__PURE__ */ jsx(
-          Link,
-          {
-            to: "/new",
-            className: "bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700",
-            children: "Add New Book"
-          }
-        ),
-        /* @__PURE__ */ jsx("button", { className: "bg-white text-blue-600 border border-blue-600 px-6 py-3 rounded-lg hover:bg-gray-100", children: "Find Books" })
-      ] })
+      /* @__PURE__ */ jsx("p", { className: "text-xl text-gray-700 mb-6", children: "Buy and sell used books using our military-grade internet technology AI+™" }),
+      /* @__PURE__ */ jsx("div", { className: "flex justify-center", children: /* @__PURE__ */ jsx(
+        Link,
+        {
+          to: "/new",
+          className: "bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700",
+          children: "Add New Book"
+        }
+      ) })
     ] }),
     /* @__PURE__ */ jsxs("div", { className: "w-full max-w-6xl mx-auto p-8", children: [
       /* @__PURE__ */ jsx(SearchBar, {}),
@@ -629,14 +660,14 @@ function Welcome() {
     /* @__PURE__ */ jsxs("div", { className: "max-w-6xl w-full p-8", children: [
       /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-center mb-6", children: [
         /* @__PURE__ */ jsx("h2", { className: "text-2xl font-semibold", children: "Featured Books" }),
-        /* @__PURE__ */ jsxs(Link, { to: "/new", className: "text-blue-600 hover:underline flex items-center gap-1", children: [
+        /* @__PURE__ */ jsxs(Link, { to: "/new", className: "text-green-600 hover:underline flex items-center gap-1", children: [
           /* @__PURE__ */ jsx("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-4 w-4", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ jsx("path", { fillRule: "evenodd", d: "M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z", clipRule: "evenodd" }) }),
           "Add New Book"
         ] })
       ] }),
-      /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-6", children: featuredBooks.map((book) => /* @__PURE__ */ jsxs("div", { className: "border rounded-lg overflow-hidden shadow-sm hover:shadow-md", children: [
-        /* @__PURE__ */ jsx("div", { className: "h-48 bg-gray-200 flex items-center justify-center", children: /* @__PURE__ */ jsx("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-16 w-16 text-gray-400", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: /* @__PURE__ */ jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" }) }) }),
-        /* @__PURE__ */ jsxs("div", { className: "p-4", children: [
+      /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-6", children: featuredBooks.map((book) => /* @__PURE__ */ jsxs("div", { className: "border rounded-lg overflow-hidden shadow-sm hover:shadow-md flex flex-col", children: [
+        /* @__PURE__ */ jsx("div", { className: "h-64 bg-gray-100", children: /* @__PURE__ */ jsx(BookCover, { book }) }),
+        /* @__PURE__ */ jsxs("div", { className: "p-4 flex flex-col flex-grow", children: [
           /* @__PURE__ */ jsx("h3", { className: "font-semibold", children: book.title }),
           /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-600", children: book.author }),
           /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-center mt-3", children: [
@@ -647,58 +678,38 @@ function Welcome() {
             /* @__PURE__ */ jsx("span", { className: "text-sm text-gray-500", children: book.condition })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "flex justify-end gap-2 mt-3", children: [
-            /* @__PURE__ */ jsx("button", { className: "text-yellow-600 text-sm hover:underline", children: "Edit" }),
+            /* @__PURE__ */ jsx("button", { className: "text-green-600 text-sm hover:underline", children: "Edit" }),
             /* @__PURE__ */ jsx("button", { className: "text-red-600 text-sm hover:underline", children: "Delete" })
           ] })
         ] })
       ] }, book.id)) }),
-      /* @__PURE__ */ jsx("div", { className: "text-center mt-8", children: /* @__PURE__ */ jsx("a", { href: "#", className: "text-blue-600 hover:underline", children: "Browse all books →" }) })
+      /* @__PURE__ */ jsx("div", { className: "text-center mt-8", children: /* @__PURE__ */ jsx("a", { href: "#", className: "text-green-600 hover:underline", children: "Browse all books →" }) })
     ] }),
-    /* @__PURE__ */ jsx("div", { className: "w-full bg-blue-50 p-8 mt-6", children: /* @__PURE__ */ jsxs("div", { className: "max-w-4xl mx-auto text-center", children: [
-      /* @__PURE__ */ jsx("h2", { className: "text-2xl font-semibold mb-3", children: "How It Works" }),
-      /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-8 mt-6", children: [
-        /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center", children: [
-          /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold mb-3", children: "1" }),
-          /* @__PURE__ */ jsx("h3", { className: "font-semibold", children: "List Your Books" }),
-          /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-600 mt-2", children: "Create listings for your used textbooks in minutes" })
-        ] }),
-        /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center", children: [
-          /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold mb-3", children: "2" }),
-          /* @__PURE__ */ jsx("h3", { className: "font-semibold", children: "Ship or Meet" }),
-          /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-600 mt-2", children: "Arrange delivery or campus meetup with buyers" })
-        ] }),
-        /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center", children: [
-          /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold mb-3", children: "3" }),
-          /* @__PURE__ */ jsx("h3", { className: "font-semibold", children: "Get Paid" }),
-          /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-600 mt-2", children: "Receive payment securely through our platform" })
-        ] })
-      ] })
-    ] }) }),
-    /* @__PURE__ */ jsx("footer", { className: "w-full bg-gray-800 text-white p-6 mt-8", children: /* @__PURE__ */ jsxs("div", { className: "max-w-6xl mx-auto", children: [
+    /* @__PURE__ */ jsx("footer", { className: "w-full bg-gray-800 text-white p-6 mt-auto", children: /* @__PURE__ */ jsxs("div", { className: "max-w-6xl mx-auto", children: [
       /* @__PURE__ */ jsxs("div", { className: "flex flex-col md:flex-row justify-between", children: [
         /* @__PURE__ */ jsxs("div", { children: [
           /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold mb-4", children: "Books4Cash" }),
-          /* @__PURE__ */ jsx("p", { className: "text-gray-300", children: "The smart way to buy and sell textbooks" })
+          /* @__PURE__ */ jsx("p", { className: "text-gray-300", children: "The snappy way to buy books." })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-2 gap-x-16 gap-y-4 mt-6 md:mt-0", children: [
-          /* @__PURE__ */ jsx("a", { href: "#", className: "hover:underline", children: "About Us" }),
-          /* @__PURE__ */ jsx("a", { href: "#", className: "hover:underline", children: "Help Center" }),
-          /* @__PURE__ */ jsx("a", { href: "#", className: "hover:underline", children: "Privacy Policy" }),
-          /* @__PURE__ */ jsx("a", { href: "#", className: "hover:underline", children: "Terms of Service" }),
-          /* @__PURE__ */ jsx("a", { href: "#", className: "hover:underline", children: "Contact Us" }),
+          /* @__PURE__ */ jsx("a", { href: "#", className: "hover:underline", children: "About" }),
+          /* @__PURE__ */ jsx("a", { href: "#", className: "hover:underline", children: "Help" }),
+          /* @__PURE__ */ jsx("a", { href: "#", className: "hover:underline", children: "Privacy" }),
+          /* @__PURE__ */ jsx("a", { href: "#", className: "hover:underline", children: "ToS" }),
+          /* @__PURE__ */ jsx("a", { href: "#", className: "hover:underline", children: "Contact" }),
           /* @__PURE__ */ jsx("a", { href: "#", className: "hover:underline", children: "Blog" })
         ] })
       ] }),
-      /* @__PURE__ */ jsx("div", { className: "mt-8 pt-4 border-t border-gray-700 text-center text-gray-400", children: /* @__PURE__ */ jsx("p", { children: "© 2023 Books4Cash. All rights reserved." }) })
+      /* @__PURE__ */ jsx("div", { className: "mt-8 pt-4 border-t border-gray-700 text-center text-gray-400", children: /* @__PURE__ */ jsx("p", { children: "© 2025 Books4Cash. All rights reserved." }) })
     ] }) })
   ] });
 }
 function meta$1() {
   return [{
-    title: "Books4Cash - Buy and Sell Used Textbooks"
+    title: "New React Router App"
   }, {
     name: "description",
-    content: "Buy and sell college textbooks at the best prices with Books4Cash."
+    content: "Welcome to React Router!"
   }];
 }
 const home = withComponentProps(function Home() {
@@ -728,9 +739,9 @@ const _new = withComponentProps(function NewBook() {
     author: "",
     price: "",
     condition: "Good",
-    category: "Computer Science",
+    category: "True Crime",
     description: "",
-    publishYear: 2023,
+    publishYear: 2025,
     pages: "",
     language: "English",
     format: "Paperback"
@@ -757,7 +768,7 @@ const _new = withComponentProps(function NewBook() {
   return /* @__PURE__ */ jsxs("main", {
     className: "flex flex-col items-center pt-4 pb-4",
     children: [/* @__PURE__ */ jsxs("header", {
-      className: "w-full bg-blue-700 text-white p-4 flex justify-between items-center",
+      className: "w-full bg-green-700 text-white p-4 flex justify-between items-center rounded-lg",
       children: [/* @__PURE__ */ jsx("div", {
         className: "flex items-center gap-2",
         children: /* @__PURE__ */ jsxs(Link, {
@@ -787,7 +798,7 @@ const _new = withComponentProps(function NewBook() {
             })
           }), /* @__PURE__ */ jsx("li", {
             children: /* @__PURE__ */ jsx("button", {
-              className: "bg-white text-blue-700 px-3 py-1 rounded hover:bg-blue-50",
+              className: "bg-white text-green-700 px-3 py-1 rounded-lg hover:bg-green-50",
               children: "Login"
             })
           })]
@@ -799,7 +810,7 @@ const _new = withComponentProps(function NewBook() {
         className: "flex items-center mb-8",
         children: [/* @__PURE__ */ jsx(Link, {
           to: "/",
-          className: "text-blue-600 hover:underline mr-2",
+          className: "text-green-600 hover:underline mr-2",
           children: "← Back to Home"
         }), /* @__PURE__ */ jsx("h2", {
           className: "text-2xl font-semibold ml-4",
@@ -953,11 +964,11 @@ const _new = withComponentProps(function NewBook() {
           children: [/* @__PURE__ */ jsx("button", {
             type: "button",
             onClick: () => navigate("/"),
-            className: "px-4 py-2 border border-gray-300 rounded text-gray-700 hover:bg-gray-100",
+            className: "px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100",
             children: "Cancel"
           }), /* @__PURE__ */ jsx("button", {
             type: "submit",
-            className: "px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700",
+            className: "px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700",
             children: "Add Book"
           })]
         })]
@@ -970,7 +981,7 @@ const route2 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProper
   default: _new,
   meta
 }, Symbol.toStringTag, { value: "Module" }));
-const serverManifest = { "entry": { "module": "/assets/entry.client-CIx7IEn2.js", "imports": ["/assets/chunk-AYJ5UCUI-CtDWdivH.js"], "css": [] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": true, "module": "/assets/root-B40BbEqH.js", "imports": ["/assets/chunk-AYJ5UCUI-CtDWdivH.js", "/assets/BookContext-BEDZBDgr.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/home": { "id": "routes/home", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/home-CnKMsqPC.js", "imports": ["/assets/BookContext-BEDZBDgr.js", "/assets/chunk-AYJ5UCUI-CtDWdivH.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/new": { "id": "routes/new", "parentId": "root", "path": "/new", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/new-DC1j9Kk0.js", "imports": ["/assets/BookContext-BEDZBDgr.js", "/assets/chunk-AYJ5UCUI-CtDWdivH.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 } }, "url": "/assets/manifest-14b4404f.js", "version": "14b4404f", "sri": void 0 };
+const serverManifest = { "entry": { "module": "/assets/entry.client-CIx7IEn2.js", "imports": ["/assets/chunk-AYJ5UCUI-CtDWdivH.js"], "css": [] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": true, "module": "/assets/root-BBQ8Gj6M.js", "imports": ["/assets/chunk-AYJ5UCUI-CtDWdivH.js", "/assets/BookContext-BfAT3Bhj.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/home": { "id": "routes/home", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/home-DmHAiO2d.js", "imports": ["/assets/BookContext-BfAT3Bhj.js", "/assets/chunk-AYJ5UCUI-CtDWdivH.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/new": { "id": "routes/new", "parentId": "root", "path": "/new", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/new-D3IvNgUi.js", "imports": ["/assets/BookContext-BfAT3Bhj.js", "/assets/chunk-AYJ5UCUI-CtDWdivH.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 } }, "url": "/assets/manifest-acac9cbd.js", "version": "acac9cbd", "sri": void 0 };
 const assetsBuildDirectory = "build/client";
 const basename = "/";
 const future = { "unstable_middleware": false, "unstable_optimizeDeps": false, "unstable_splitRouteModules": false, "unstable_subResourceIntegrity": false, "unstable_viteEnvironmentApi": false };

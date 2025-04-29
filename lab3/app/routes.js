@@ -4,6 +4,6 @@ export default [
   index("routes/home.jsx"),
   {
     path: "/new",
-    lazy: () => import("./routes/new.jsx")
+    file: "routes/new.jsx"  
   }
 ];
