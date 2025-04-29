@@ -51,14 +51,14 @@ export default function NewBook() {
   };
 
   return (
-    <main className="flex flex-col items-center pt-4 pb-4">
-      <header className="w-full bg-green-700 text-white p-4 flex justify-between items-center rounded-lg">
+    <main className="flex flex-col items-center pt-16 pb-4">
+      <header className="w-full bg-green-700 text-white p-4 flex justify-between items-center fixed top-0 left-0">
         <div className="flex items-center gap-2">
           <Link to="/" className="flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
               <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.38A7.968 7.968 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.969 7.969 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
             </svg>
-            <h1 className="text-2xl font-bold">Books4Cash</h1>
+            <h1 className="text-2xl font-bold">Books4Cash.io</h1>
           </Link>
         </div>
         <nav>

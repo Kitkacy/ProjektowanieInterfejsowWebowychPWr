@@ -90,7 +90,7 @@ export function Welcome() {
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between">
             <div>
-              <h3 className="text-xl font-bold mb-4">Books4Cash</h3>
+              <h3 className="text-xl font-bold mb-4">Books4Cash.io</h3>
               <p className="text-gray-300">The snappy way to buy books.</p>
             </div>
             <div className="grid grid-cols-2 gap-x-16 gap-y-4 mt-6 md:mt-0">
@@ -103,7 +103,7 @@ export function Welcome() {
             </div>
           </div>
           <div className="mt-8 pt-4 border-t border-gray-700 text-center text-gray-400">
-            <p>© 2025 Books4Cash. All rights reserved.</p>
+            <p>© 2025 Books4Cash.io. All rights reserved.</p>
           </div>
         </div>
       </footer>
