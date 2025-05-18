@@ -2,11 +2,10 @@ import { Link } from "react-router";
 import { BookCover } from "../components/BookCover";
 import { SearchBar } from "../components/SearchBar";
 import { SearchResults } from "../components/SearchResults";
-
 import { useBooks } from "../context/BookContext";
 
 export function Welcome() {
-  const { featuredBooks, user, login, logout, showMyBooks, setShowMyBooks } = useBooks();
+  const { featuredBooks } = useBooks();
 
   return (
     <main className="flex flex-col items-center">
@@ -23,35 +22,10 @@ export function Welcome() {
               <li><a href="#" className="hover:underline">Sell</a></li>
               <li><a href="#" className="hover:underline">About</a></li>
               <li><a href="#" className="hover:underline">Contact</a></li>
-              {user && (
-                <li>
-                  <button
-                    className={`px-3 py-1 rounded-lg ${showMyBooks ? 'bg-green-900 text-white' : 'bg-white text-green-700'} hover:bg-green-50`}
-                    onClick={() => setShowMyBooks((v) => !v)}
-                  >
-                    MOJE
-                  </button>
-                </li>
-              )}
               <li>
-                {user ? (
-                  <>
-                    <span className="mr-2 text-sm">{user.displayName}</span>
-                    <button
-                      className="bg-white text-green-700 px-3 py-1 rounded-lg hover:bg-green-50"
-                      onClick={logout}
-                    >
-                      Logout
-                    </button>
-                  </>
-                ) : (
-                  <button
-                    className="bg-white text-green-700 px-3 py-1 rounded-lg hover:bg-green-50"
-                    onClick={login}
-                  >
-                    Login
-                  </button>
-                )}
+                <button className="bg-white text-green-700 px-3 py-1 rounded-lg hover:bg-green-50">
+                  Login
+                </button>
               </li>
             </ul>
           </nav>
