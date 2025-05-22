@@ -1,5 +1,5 @@
 export default {
   // Config options...
-  // Server-side render by default, to enable SPA mode set this to `false`
-  ssr: true,
+  // Setting ssr to false to enable client-side rendering (SPA mode)
+  ssr: false,
 };

@@ -1,51 +1,62 @@
 import {
   isRouteErrorResponse,
-  Links,
-  Meta,
   Outlet,
-  Scripts,
-  ScrollRestoration,
-} from "react-router";
+  Routes,
+  Route,
+} from "react-router-dom";
+import { Helmet, HelmetProvider } from 'react-helmet-async';
+import { lazy, Suspense } from 'react';
 
 import { BookProvider } from "./context/BookContext";
-import stylesheet from "./app.css?url";
+import "./app.css";
 
-export const links = () => [
-  { rel: "preconnect", href: "https://fonts.googleapis.com" },
-  {
-    rel: "preconnect",
-    href: "https://fonts.gstatic.com",
-    crossOrigin: "anonymous",
-  },
-  {
-    rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
-  },
-  { rel: "stylesheet", href: stylesheet },
-];
+
+const Home = lazy(() => import('./routes/home'));
+const New = lazy(() => import('./routes/new'));
+
+const Loading = () => <div className="p-4">Loading...</div>;
 
 export function Layout({ children }) {
   return (
-    <html lang="en" className="h-full">
-      <head>
+    <div className="min-h-full flex flex-col bg-white">
+      <Helmet>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <Meta />
-        <Links />
-      </head>
-      <body className="min-h-full flex flex-col bg-white">
-        <BookProvider>
-          {children}
-        </BookProvider>
-        <ScrollRestoration />
-        <Scripts />
-      </body>
-    </html>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        />
+      </Helmet>
+      <BookProvider>
+        {children}
+      </BookProvider>
+    </div>
   );
 }
 
 export default function App() {
-  return <Outlet />;
+  return (
+    <Routes>
+      <Route path="/" element={<Outlet />}>
+        <Route index element={
+          <Suspense fallback={<Loading />}>
+            <Home />
+          </Suspense>
+        } />
+        <Route path="new" element={
+          <Suspense fallback={<Loading />}>
+            <New />
+          </Suspense>
+        } />
+      </Route>
+    </Routes>
+  );
 }
 
 export function ErrorBoundary({ error }) {

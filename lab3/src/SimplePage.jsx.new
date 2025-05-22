@@ -1,0 +1,51 @@
+import React from 'react';
+
+export default function SimplePage() {
+  return (
+    <div style={{ 
+      padding: '2rem', 
+      maxWidth: '800px', 
+      margin: '0 auto',
+      textAlign: 'center'
+    }}>
+      <h1 style={{ color: '#16a34a', marginBottom: '1rem' }}>Books4Cash.io</h1>
+      <p style={{ marginBottom: '2rem' }}>
+        This is a simple page to verify your React app is rendering correctly.
+      </p>
+      
+      <div style={{ 
+        display: 'flex',
+        justifyContent: 'center',
+        gap: '1rem',
+        marginBottom: '2rem'
+      }}>
+        <a href="/" style={{ 
+          background: '#16a34a',
+          color: 'white',
+          padding: '0.5rem 1rem',
+          borderRadius: '0.25rem',
+          textDecoration: 'none'
+        }}>Home</a>
+        
+        <a href="/new" style={{ 
+          background: '#16a34a',
+          color: 'white',
+          padding: '0.5rem 1rem',
+          borderRadius: '0.25rem',
+          textDecoration: 'none'
+        }}>Add New Book</a>
+      </div>
+      
+      <div style={{ 
+        padding: '1rem', 
+        border: '1px solid #e5e7eb',
+        borderRadius: '0.5rem',
+        marginBottom: '2rem'
+      }}>
+        <h2 style={{ marginBottom: '1rem' }}>Debugging Information</h2>
+        <p>Application is running in: {import.meta.env.MODE} mode</p>
+        <p>Current route: {window.location.pathname}</p>
+      </div>
+    </div>
+  );
+}

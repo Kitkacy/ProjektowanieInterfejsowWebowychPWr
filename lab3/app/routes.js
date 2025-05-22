@@ -1,9 +1,34 @@
-import { index } from "@react-router/dev/routes";
+import { lazy, Suspense } from 'react';
+import App from './root';
+
+const Home = lazy(() => import('./routes/home'));
+const New = lazy(() => import('./routes/new'));
+
+const Loading = () => {
+  return <div className="p-4">Loading...</div>;
+};
 
 export default [
-  index("routes/home.jsx"),
   {
-    path: "/new",
-    file: "routes/new.jsx"  
+    path: '/',
+    element: <App />,
+    children: [
+      {
+        index: true,
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Home />
+          </Suspense>
+        )
+      },
+      {
+        path: '/new',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <New />
+          </Suspense>
+        )
+      }
+    ]
   }
 ];
