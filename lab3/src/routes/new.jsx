@@ -4,8 +4,10 @@ import { Helmet } from 'react-helmet-async';
 import { useBooks } from '../context/BookContext';
 
 export default function NewBook() {
-  const { addBook, filterOptions } = useBooks();
+  const { addBook, filterOptions, loading, error } = useBooks();
   const navigate = useNavigate();
+  const [submitting, setSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
   const [bookData, setBookData] = useState({
     title: '',
     author: '',
@@ -29,23 +31,36 @@ export default function NewBook() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!bookData.title || !bookData.author || !bookData.price) {
-      alert('Please fill in all required fields');
+      setErrorMessage('Please fill in all required fields');
       return;
     }
     
-
-    addBook(bookData);
-    
-
-    navigate('/');
+    try {
+      setSubmitting(true);
+      setErrorMessage(null);
+      
+      await addBook(bookData);
+      
+      navigate('/');
+    } catch (error) {
+      console.error('Error adding book:', error);
+      setErrorMessage(error.message || 'Failed to add book. Please try again.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
     <main className="flex flex-col items-center pt-16 pb-4">
+      <Helmet>
+        <title>Add New Book - Books4Cash</title>
+        <meta name="description" content="Add a new book to the Books4Cash marketplace" />
+      </Helmet>
+      
       <header className="w-full bg-green-700 text-white p-4 flex justify-between items-center fixed top-0 left-0">
         <div className="flex items-center gap-2">
           <Link to="/" className="flex items-center gap-2">
@@ -74,6 +89,28 @@ export default function NewBook() {
           </Link>
           <h2 className="text-2xl font-semibold ml-4">Add New Book</h2>
         </div>
+
+        {}
+        <div className="mb-4 bg-blue-50 border border-blue-200 rounded-lg p-3">
+          <div className="flex items-center text-blue-700">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+            </svg>
+            <span className="font-semibold text-sm">This book will be added to Firestore database</span>
+          </div>
+        </div>
+
+        {}
+        {errorMessage && (
+          <div className="mb-4 bg-red-50 border border-red-300 rounded-lg p-3">
+            <div className="flex items-center text-red-700">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>
+              <span>{errorMessage}</span>
+            </div>
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg border shadow-sm">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -244,14 +281,26 @@ export default function NewBook() {
               type="button"
               onClick={() => navigate('/')}
               className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100"
+              disabled={submitting}
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+              className={`px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 flex items-center ${submitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+              disabled={submitting}
             >
-              Add Book
+              {submitting ? (
+                <>
+                  <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Adding...
+                </>
+              ) : (
+                'Add Book'
+              )}
             </button>
           </div>
         </form>

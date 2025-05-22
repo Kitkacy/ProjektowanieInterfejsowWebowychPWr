@@ -5,7 +5,7 @@ import { SearchResults } from "../components/SearchResults";
 import { useBooks } from "../context/BookContext";
 
 export function Welcome() {
-  const { featuredBooks } = useBooks();
+  const { featuredBooks, loading, error } = useBooks();
 
   return (
     <main className="flex flex-col items-center">

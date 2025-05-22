@@ -1,7 +1,34 @@
 import { useBooks } from '../context/BookContext';
 
 export function SearchResults() {
-  const { searchResults, filters, removeBook } = useBooks();
+  const { searchResults, filters, removeBook, loading, error } = useBooks();
+  
+  if (loading) {
+    return (
+      <div className="mt-6 w-full max-w-4xl mx-auto">
+        <div className="p-4 text-center">
+          <div className="animate-pulse">
+            <div className="h-4 bg-gray-200 rounded w-1/4 mx-auto mb-4"></div>
+            <div className="h-10 bg-gray-200 rounded mb-2"></div>
+            <div className="h-10 bg-gray-200 rounded mb-2"></div>
+            <div className="h-10 bg-gray-200 rounded mb-2"></div>
+          </div>
+          <p className="text-gray-500 mt-2">Loading books...</p>
+        </div>
+      </div>
+    );
+  }
+  
+  if (error) {
+    return (
+      <div className="mt-6 w-full max-w-4xl mx-auto">
+        <div className="p-4 border border-red-300 bg-red-50 rounded-lg text-red-700">
+          <h3 className="font-semibold mb-2">Error loading books</h3>
+          <p>{error}</p>
+        </div>
+      </div>
+    );
+  }
   
   if (searchResults.length === 0) {
     return null;
