@@ -3,11 +3,9 @@
 <head>
   <title>Firebase Firestore Test</title>
   <script type="module">
-    // Import Firebase modules
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
     import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js";
 
-    // Your Firebase configuration - replace with your project config
     const firebaseConfig = {
       apiKey: "AIzaSyDAaQWLf5z8Hw1gqv2GcNY63HJJcR8WVv0",
       authDomain: "piwowicka.firebaseapp.com",
@@ -17,20 +15,16 @@
       appId: "1:123456789:web:abc123"
     };
 
-    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // Function to fetch books from Firestore
     async function fetchBooks() {
       try {
         const booksRef = collection(db, "books");
         const querySnapshot = await getDocs(booksRef);
         
-        // Clear results area
         document.getElementById("results").innerHTML = "";
         
-        // Add each book to the results
         let count = 0;
         querySnapshot.forEach((doc) => {
           count++;
@@ -47,10 +41,8 @@
           document.getElementById("results").appendChild(bookElement);
         });
         
-        // Update book count
         document.getElementById("count").textContent = count;
         
-        // Hide loading indicator
         document.getElementById("loading").style.display = "none";
         document.getElementById("content").style.display = "block";
       } catch (error) {
@@ -59,7 +51,6 @@
       }
     }
 
-    // Execute when document is loaded
     document.addEventListener("DOMContentLoaded", () => {
       fetchBooks();
     });

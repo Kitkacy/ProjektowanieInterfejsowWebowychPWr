@@ -8,6 +8,7 @@ import { Helmet } from 'react-helmet-async';
 import { lazy, Suspense } from 'react';
 
 import { BookProvider } from "./context/BookContext";
+import { AuthProvider } from "./context/AuthContext";
 import SimplePage from "./SimplePage";
 import "./app.css";
 
@@ -36,9 +37,11 @@ export function Layout({ children }) {
           href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
         />
       </Helmet>
-      <BookProvider>
-        {children}
-      </BookProvider>
+      <AuthProvider>
+        <BookProvider>
+          {children}
+        </BookProvider>
+      </AuthProvider>
     </div>
   );
 }

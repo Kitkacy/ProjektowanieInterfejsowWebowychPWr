@@ -10,6 +10,8 @@
     "deploy:all": "./scripts/deploy.sh",
     "test:firestore": "node --experimental-modules scripts/test-firestore.js",
     "test:firestore:crud": "node --experimental-modules scripts/firestore-crud-test.js",
+    "test:auth": "node --experimental-modules tests/test-auth.js",
+    "test:auth:flow": "node --experimental-modules tests/auth-flow-test.js",
     "firebase:test": "node scripts/firebase-test.js",
     "import:books": "node --experimental-modules scripts/import-to-firestore.js",
     "init:firebase": "node --experimental-modules scripts/init-firebase-db.js",

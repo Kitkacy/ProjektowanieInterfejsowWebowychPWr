@@ -6,11 +6,14 @@ import {
   deleteDoc, 
   query, 
   where,
-  updateDoc
+  updateDoc,
+  setDoc,
+  getDoc
 } from 'firebase/firestore';
 import { db } from './config.js';
 
 const BOOKS_COLLECTION = 'books';
+const USERS_COLLECTION = 'users';
 
 export const getAllBooks = async () => {
   try {
@@ -26,13 +29,14 @@ export const getAllBooks = async () => {
   }
 };
 
-export const addBook = async (bookData) => {
+export const addBook = async (bookData, userId = null) => {
   try {
     const booksCollection = collection(db, BOOKS_COLLECTION);
-    const docRef = await addDoc(booksCollection, bookData);
+    const bookWithOwner = userId ? { ...bookData, ownerId: userId } : bookData;
+    const docRef = await addDoc(booksCollection, bookWithOwner);
     return {
       id: docRef.id,
-      ...bookData
+      ...bookWithOwner
     };
   } catch (error) {
     console.error('Error adding book:', error);
@@ -108,6 +112,84 @@ export const searchBooks = async (searchTerm, filters) => {
     return filteredBooks;
   } catch (error) {
     console.error('Error searching books:', error);
+    throw error;
+  }
+};
+
+export const getUserBooks = async (userId) => {
+  if (!userId) {
+    console.error('No userId provided to getUserBooks');
+    return [];
+  }
+  
+  try {
+    const booksCollection = collection(db, BOOKS_COLLECTION);
+    const q = query(booksCollection, where("ownerId", "==", userId));
+    const snapshot = await getDocs(q);
+    
+    return snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+  } catch (error) {
+    console.error('Error getting user books:', error);
+    throw error;
+  }
+};
+
+// User profile management functions
+export const createUserProfile = async (userId, profileData) => {
+  try {
+    const userRef = doc(db, USERS_COLLECTION, userId);
+    await setDoc(userRef, {
+      ...profileData,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    });
+    
+    return {
+      id: userId,
+      ...profileData
+    };
+  } catch (error) {
+    console.error('Error creating user profile:', error);
+    throw error;
+  }
+};
+
+export const getUserProfile = async (userId) => {
+  try {
+    const userRef = doc(db, USERS_COLLECTION, userId);
+    const userDoc = await getDoc(userRef);
+    
+    if (userDoc.exists()) {
+      return {
+        id: userDoc.id,
+        ...userDoc.data()
+      };
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.error('Error getting user profile:', error);
+    throw error;
+  }
+};
+
+export const updateUserProfile = async (userId, profileData) => {
+  try {
+    const userRef = doc(db, USERS_COLLECTION, userId);
+    await updateDoc(userRef, {
+      ...profileData,
+      updatedAt: new Date()
+    });
+    
+    return {
+      id: userId,
+      ...profileData
+    };
+  } catch (error) {
+    console.error('Error updating user profile:', error);
     throw error;
   }
 };

@@ -1,11 +1,14 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BookCover } from "../components/BookCover";
 import { SearchBar } from "../components/SearchBar";
 import { SearchResults } from "../components/SearchResults";
 import { useBooks } from "../context/BookContext";
+import { useAuth } from "../context/AuthContext";
 
 export function Welcome() {
   const { featuredBooks, loading, error } = useBooks();
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <main className="flex flex-col items-center">
@@ -22,11 +25,43 @@ export function Welcome() {
               <li><a href="#" className="hover:underline">Sell</a></li>
               <li><a href="#" className="hover:underline">About</a></li>
               <li><a href="#" className="hover:underline">Contact</a></li>
-              <li>
-                <button className="bg-white text-green-700 px-3 py-1 rounded-lg hover:bg-green-50">
-                  Login
-                </button>
-              </li>
+              {user ? (
+                <>
+                  <li>
+                    <Link to="/profile" className="text-white hover:underline flex items-center">
+                      {user.photoURL ? (
+                        <img 
+                          src={user.photoURL} 
+                          alt="Profile" 
+                          className="h-6 w-6 rounded-full mr-2 border border-white"
+                        />
+                      ) : (
+                        <div className="h-6 w-6 rounded-full bg-white text-green-700 flex items-center justify-center text-sm font-bold mr-2">
+                          {user.displayName ? user.displayName.charAt(0).toUpperCase() : user.email.charAt(0).toUpperCase()}
+                        </div>
+                      )}
+                      <span>Hello, {user.displayName || user.email.split('@')[0]}</span>
+                    </Link>
+                  </li>
+                  <li>
+                    <button 
+                      onClick={() => logout()} 
+                      className="bg-white text-green-700 px-3 py-1 rounded-lg hover:bg-green-50"
+                    >
+                      Logout
+                    </button>
+                  </li>
+                </>
+              ) : (
+                <li>
+                  <button 
+                    onClick={() => navigate('/login')} 
+                    className="bg-white text-green-700 px-3 py-1 rounded-lg hover:bg-green-50"
+                  >
+                    Login
+                  </button>
+                </li>
+              )}
             </ul>
           </nav>
         </div>
@@ -36,12 +71,21 @@ export function Welcome() {
         <h2 className="text-4xl font-bold mb-4">Turn Your Books Into Cash</h2>
         <p className="text-xl text-gray-700 mb-6">Buy and sell used books using our military-grade internet technology AI+™</p>
         <div className="flex justify-center">
-          <Link 
-            to="/new" 
-            className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700"
-          >
-            Add New Book
-          </Link>
+          {user ? (
+            <Link 
+              to="/new" 
+              className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700"
+            >
+              Add New Book
+            </Link>
+          ) : (
+            <button 
+              onClick={() => navigate('/login')} 
+              className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700"
+            >
+              Login to Add Books
+            </button>
+          )}
         </div>
       </div>
       
