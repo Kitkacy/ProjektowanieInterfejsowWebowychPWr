@@ -1,3 +1,15 @@
+// Get books owned by a specific user
+export const getUserBooks = async (userId) => {
+  try {
+    const booksCollection = collection(db, BOOKS_COLLECTION);
+    const q = query(booksCollection, where('ownerId', '==', userId));
+    const snapshot = await getDocs(q);
+    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  } catch (error) {
+    console.error('Error getting user books:', error);
+    throw error;
+  }
+};
 import { 
   collection, 
   getDocs, 

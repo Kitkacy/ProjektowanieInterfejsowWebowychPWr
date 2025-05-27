@@ -4,8 +4,17 @@ import { SearchBar } from "../components/SearchBar";
 import { SearchResults } from "../components/SearchResults";
 import { useBooks } from "../context/BookContext";
 
+import { useAuth } from "../context/AuthContext";
+
 export function Welcome() {
-  const { featuredBooks, loading, error } = useBooks();
+  const { featuredBooks, loading, error, showMyBooks } = useBooks();
+  const { user } = useAuth();
+
+  const handleShowMyBooks = async () => {
+    if (showMyBooks) {
+      await showMyBooks();
+    }
+  };
 
   return (
     <main className="flex flex-col items-center">
@@ -46,7 +55,19 @@ export function Welcome() {
       </div>
       
       <div className="w-full max-w-6xl mx-auto p-8">
-        <SearchBar />
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
+          <SearchBar />
+          {user ? (
+            <button
+              onClick={handleShowMyBooks}
+              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 whitespace-nowrap mt-4 md:mt-0"
+            >
+              Show My Books
+            </button>
+          ) : (
+            <span className="text-gray-500 text-sm mt-4 md:mt-0">Log in to see your books</span>
+          )}
+        </div>
         <SearchResults />
       </div>
 

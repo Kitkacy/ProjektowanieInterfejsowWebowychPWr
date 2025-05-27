@@ -1,10 +1,26 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import { useAuth } from './AuthContext';
 import { 
   getAllBooks, 
   addBook as addBookToFirestore, 
   deleteBook as deleteBookFromFirestore,
-  searchBooks as searchBooksInFirestore
+  searchBooks as searchBooksInFirestore,
+  getUserBooks
 } from '../firebase/firestoreService';
+  // Show only books added by the current user
+  const showMyBooks = async () => {
+    try {
+      if (!user) throw new Error('You must be logged in to view your books.');
+      setLoading(true);
+      const myBooks = await getUserBooks(user.uid);
+      setSearchResults(myBooks);
+    } catch (err) {
+      setError(err.message);
+      setSearchResults([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 import { initializeDatabase } from '../firebase/initData';
 
 
@@ -24,6 +40,7 @@ export function BookProvider({ children }) {
     priceRange: { min: 0, max: 100 },
     publishYear: []
   });
+  const { user } = useAuth();
 
   const filterOptions = {
     categories: [...new Set(books.map(book => book.category))],
@@ -52,12 +69,13 @@ export function BookProvider({ children }) {
 
   const addBook = async (book) => {
     try {
+      if (!user) throw new Error('You must be logged in to add a book.');
       const newBookData = {
         ...book,
         cover: DEFAULT_COVER,
-        hasCover: false
+        hasCover: false,
+        ownerId: user.uid
       };
-      
       const newBook = await addBookToFirestore(newBookData);
       setBooks(prevBooks => [...prevBooks, newBook]);
       return newBook;
@@ -154,6 +172,7 @@ export function BookProvider({ children }) {
         filterOptions,
         addBook, 
         removeBook,
+        showMyBooks,
         DEFAULT_COVER
       }}
     >

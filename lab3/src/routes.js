@@ -4,6 +4,7 @@ import App from './root';
 // Lazy load route components for better performance
 const Home = lazy(() => import('./routes/home'));
 const New = lazy(() => import('./routes/new'));
+const Login = lazy(() => import('./routes/login'));
 
 // Add a loading component for suspense fallback
 const Loading = () => {
@@ -28,6 +29,14 @@ export default [
         element: (
           <Suspense fallback={<Loading />}>
             <New />
+          </Suspense>
+        )
+      },
+      {
+        path: '/login',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Login />
           </Suspense>
         )
       }
