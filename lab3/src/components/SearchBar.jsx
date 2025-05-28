@@ -25,7 +25,7 @@ export function SearchBar() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search by title, author or category..."
-            className="w-full py-2 px-4 focus:outline-none rounded-l-lg"
+            className="w-full py-2 px-4 focus:outline-none rounded-l-lg text-gray-900"
           />
           <button 
             type="button"

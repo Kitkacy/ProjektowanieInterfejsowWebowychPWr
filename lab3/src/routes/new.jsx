@@ -125,7 +125,7 @@ export default function NewBook() {
                 name="title"
                 value={bookData.title}
                 onChange={handleChange}
-                className="w-full p-2 border rounded focus:ring focus:ring-blue-200 focus:border-blue-500"
+                className="w-full p-2 border rounded focus:ring focus:ring-blue-200 focus:border-blue-500 text-gray-900"
                 required
               />
             </div>
@@ -141,7 +141,7 @@ export default function NewBook() {
                 name="author"
                 value={bookData.author}
                 onChange={handleChange}
-                className="w-full p-2 border rounded focus:ring focus:ring-blue-200 focus:border-blue-500"
+                className="w-full p-2 border rounded focus:ring focus:ring-blue-200 focus:border-blue-500 text-gray-900"
                 required
               />
             </div>
@@ -158,7 +158,7 @@ export default function NewBook() {
                 name="price"
                 value={bookData.price}
                 onChange={handleChange}
-                className="w-full p-2 border rounded focus:ring focus:ring-blue-200 focus:border-blue-500"
+                className="w-full p-2 border rounded focus:ring focus:ring-blue-200 focus:border-blue-500 text-gray-900"
                 required
               />
             </div>
@@ -173,7 +173,7 @@ export default function NewBook() {
                 name="condition"
                 value={bookData.condition}
                 onChange={handleChange}
-                className="w-full p-2 border rounded focus:ring focus:ring-blue-200 focus:border-blue-500"
+                className="w-full p-2 border rounded focus:ring focus:ring-blue-200 focus:border-blue-500 text-gray-900"
               >
                 {filterOptions.conditions.map(condition => (
                   <option key={condition} value={condition}>
@@ -192,7 +192,7 @@ export default function NewBook() {
                 name="category"
                 value={bookData.category}
                 onChange={handleChange}
-                className="w-full p-2 border rounded focus:ring focus:ring-blue-200 focus:border-blue-500"
+                className="w-full p-2 border rounded focus:ring focus:ring-blue-200 focus:border-blue-500 text-gray-900"
               >
                 {filterOptions.categories.map(category => (
                   <option key={category} value={category}>
@@ -212,7 +212,7 @@ export default function NewBook() {
                 name="format"
                 value={bookData.format}
                 onChange={handleChange}
-                className="w-full p-2 border rounded focus:ring focus:ring-blue-200 focus:border-blue-500"
+                className="w-full p-2 border rounded focus:ring focus:ring-blue-200 focus:border-blue-500 text-gray-900"
               >
                 {filterOptions.formats.map(format => (
                   <option key={format} value={format}>
@@ -232,7 +232,7 @@ export default function NewBook() {
                 name="publishYear"
                 value={bookData.publishYear}
                 onChange={handleChange}
-                className="w-full p-2 border rounded focus:ring focus:ring-blue-200 focus:border-blue-500"
+                className="w-full p-2 border rounded focus:ring focus:ring-blue-200 focus:border-blue-500 text-gray-900"
               >
                 {[...Array(10)].map((_, i) => {
                   const year = 2023 - i;
@@ -256,7 +256,7 @@ export default function NewBook() {
                 name="pages"
                 value={bookData.pages}
                 onChange={handleChange}
-                className="w-full p-2 border rounded focus:ring focus:ring-blue-200 focus:border-blue-500"
+                className="w-full p-2 border rounded focus:ring focus:ring-blue-200 focus:border-blue-500 text-gray-900"
               />
             </div>
           </div>
@@ -272,7 +272,7 @@ export default function NewBook() {
               rows="4"
               value={bookData.description}
               onChange={handleChange}
-              className="w-full p-2 border rounded focus:ring focus:ring-blue-200 focus:border-blue-500"
+              className="w-full p-2 border rounded focus:ring focus:ring-blue-200 focus:border-blue-500 text-gray-900"
             ></textarea>
           </div>
 

@@ -136,7 +136,6 @@ export function SearchResults() {
         isOpen={isEditModalOpen}
         onClose={handleEditModalClose}
         onSuccess={() => {
-          // Optional: You can add a success message or refresh logic here
         }}
       />
     </div>

@@ -13,7 +13,6 @@ export default function Signup() {
   const { user, signup, loginWithGoogle, error, clearError } = useAuth();
   const navigate = useNavigate();
   
-  // If user is already logged in, redirect to home
   if (user) {
     return <Navigate to="/" />;
   }

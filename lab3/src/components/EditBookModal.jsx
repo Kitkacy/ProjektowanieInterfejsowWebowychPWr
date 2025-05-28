@@ -19,7 +19,6 @@ export function EditBookModal({ book, isOpen, onClose, onSuccess }) {
   });
   const [isInitialized, setIsInitialized] = useState(false);
 
-  // Initialize form data only when modal opens with a new book
   useEffect(() => {
     if (isOpen && book && !isInitialized) {
       setBookData({
@@ -38,7 +37,6 @@ export function EditBookModal({ book, isOpen, onClose, onSuccess }) {
       setErrorMessage(null);
     }
     
-    // Reset when modal closes
     if (!isOpen) {
       setIsInitialized(false);
       setSubmitting(false);
@@ -117,7 +115,7 @@ export function EditBookModal({ book, isOpen, onClose, onSuccess }) {
                   onChange={handleChange}
                   required
                   disabled={submitting}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 disabled:bg-gray-100"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 disabled:bg-gray-100 text-gray-900"
                 />
               </div>
 
@@ -133,7 +131,7 @@ export function EditBookModal({ book, isOpen, onClose, onSuccess }) {
                   onChange={handleChange}
                   required
                   disabled={submitting}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 disabled:bg-gray-100"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 disabled:bg-gray-100 text-gray-900"
                 />
               </div>
 
@@ -151,7 +149,7 @@ export function EditBookModal({ book, isOpen, onClose, onSuccess }) {
                   step="0.01"
                   required
                   disabled={submitting}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 disabled:bg-gray-100"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 disabled:bg-gray-100 text-gray-900"
                 />
               </div>
 
@@ -167,7 +165,7 @@ export function EditBookModal({ book, isOpen, onClose, onSuccess }) {
                   onChange={handleChange}
                   min="1"
                   disabled={submitting}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 disabled:bg-gray-100"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 disabled:bg-gray-100 text-gray-900"
                 />
               </div>
 
@@ -181,7 +179,7 @@ export function EditBookModal({ book, isOpen, onClose, onSuccess }) {
                   value={bookData.condition}
                   onChange={handleChange}
                   disabled={submitting}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 disabled:bg-gray-100"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 disabled:bg-gray-100 text-gray-900"
                 >
                   <option value="New">New</option>
                   <option value="Like New">Like New</option>
@@ -201,7 +199,7 @@ export function EditBookModal({ book, isOpen, onClose, onSuccess }) {
                   value={bookData.category}
                   onChange={handleChange}
                   disabled={submitting}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 disabled:bg-gray-100"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 disabled:bg-gray-100 text-gray-900"
                 >
                   <option value="True Crime">True Crime</option>
                   <option value="Fiction">Fiction</option>
@@ -241,7 +239,7 @@ export function EditBookModal({ book, isOpen, onClose, onSuccess }) {
                   value={bookData.format}
                   onChange={handleChange}
                   disabled={submitting}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 disabled:bg-gray-100"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 disabled:bg-gray-100 text-gray-900"
                 >
                   <option value="Paperback">Paperback</option>
                   <option value="Hardcover">Hardcover</option>
@@ -263,7 +261,7 @@ export function EditBookModal({ book, isOpen, onClose, onSuccess }) {
                   min="1900"
                   max="2030"
                   disabled={submitting}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 disabled:bg-gray-100"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 disabled:bg-gray-100 text-gray-900"
                 />
               </div>
             </div>
@@ -278,7 +276,7 @@ export function EditBookModal({ book, isOpen, onClose, onSuccess }) {
                 value={bookData.language}
                 onChange={handleChange}
                 disabled={submitting}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 disabled:bg-gray-100"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 disabled:bg-gray-100 text-gray-900"
               >
                 <option value="English">English</option>
                 <option value="Spanish">Spanish</option>
@@ -307,7 +305,7 @@ export function EditBookModal({ book, isOpen, onClose, onSuccess }) {
                 onChange={handleChange}
                 rows={4}
                 disabled={submitting}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 disabled:bg-gray-100"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 disabled:bg-gray-100 text-gray-900"
                 placeholder="Brief description of the book's condition or any additional notes..."
               />
             </div>

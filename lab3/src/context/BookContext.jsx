@@ -77,7 +77,6 @@ export function BookProvider({ children }) {
     try {
       if (!user) throw new Error('You must be logged in to delete a book.');
       
-      // Check if user owns the book
       const book = books.find(b => b.id === id) || searchResults.find(b => b.id === id);
       if (book && book.ownerId !== user.uid) {
         throw new Error('You can only delete books you own.');
@@ -97,7 +96,6 @@ export function BookProvider({ children }) {
     try {
       if (!user) throw new Error('You must be logged in to edit a book.');
       
-      // Check if user owns the book
       const book = books.find(b => b.id === id) || searchResults.find(b => b.id === id);
       if (book && book.ownerId !== user.uid) {
         throw new Error('You can only edit books you own.');
@@ -105,7 +103,6 @@ export function BookProvider({ children }) {
       
       const updatedBook = await updateBookInFirestore(id, bookData);
       
-      // Update the book in both books and searchResults arrays
       setBooks(prevBooks => 
         prevBooks.map(book => book.id === id ? { ...book, ...updatedBook } : book)
       );
@@ -180,7 +177,6 @@ export function BookProvider({ children }) {
     }
   };
 
-  // Show only books added by the current user
   const showMyBooks = useCallback(async () => {
     try {
       if (!user) throw new Error('You must be logged in to view your books.');
@@ -195,7 +191,6 @@ export function BookProvider({ children }) {
     }
   }, [user]);
 
-  // Memoize the provider value to prevent unnecessary re-renders
   const contextValue = useMemo(() => ({
     books, 
     featuredBooks: books.slice(0, 3),

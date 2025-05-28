@@ -131,7 +131,7 @@ export function FilterOptions({ isOpen, toggleFilters }) {
               min="0"
               value={localPriceRange.min}
               onChange={(e) => handlePriceChange('min', e.target.value)}
-              className="w-16 p-2 border rounded-lg text-sm"
+              className="w-16 p-2 border rounded-lg text-sm text-gray-900"
               placeholder="Min"
             />
           </div>
@@ -142,7 +142,7 @@ export function FilterOptions({ isOpen, toggleFilters }) {
               min="0"
               value={localPriceRange.max}
               onChange={(e) => handlePriceChange('max', e.target.value)}
-              className="w-16 p-2 border rounded-lg text-sm"
+              className="w-16 p-2 border rounded-lg text-sm text-gray-900"
               placeholder="Max"
             />
           </div>

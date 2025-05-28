@@ -6,7 +6,7 @@ import { useBooks } from "../context/BookContext";
 
 
 import { useAuth } from "../context/AuthContext";
-import { GoogleLoginButton } from "../components/GoogleLoginButton";
+import { AuthButton } from "../components/AuthButton";
 
 export function Welcome() {
   const { featuredBooks, loading, error, showMyBooks } = useBooks();
@@ -34,7 +34,7 @@ export function Welcome() {
               <li><a href="#" className="hover:underline">About</a></li>
               <li><a href="#" className="hover:underline">Contact</a></li>
               <li>
-                <GoogleLoginButton />
+                <AuthButton />
               </li>
             </ul>
           </nav>

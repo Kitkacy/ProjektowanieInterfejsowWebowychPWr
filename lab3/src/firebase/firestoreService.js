@@ -1,4 +1,3 @@
-// Get books owned by a specific user
 export const getUserBooks = async (userId) => {
   try {
     const booksCollection = collection(db, BOOKS_COLLECTION);
