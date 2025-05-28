@@ -60,6 +60,7 @@ export default function App() {
             <New />
           </Suspense>
         } />
+        {/* Login route removed: Google-only authentication */}
         <Route path="simple" element={
           <Suspense fallback={<Loading />}>
             <SimplePage />

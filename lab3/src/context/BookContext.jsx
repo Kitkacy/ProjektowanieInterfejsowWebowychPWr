@@ -7,20 +7,6 @@ import {
   searchBooks as searchBooksInFirestore,
   getUserBooks
 } from '../firebase/firestoreService';
-  // Show only books added by the current user
-  const showMyBooks = async () => {
-    try {
-      if (!user) throw new Error('You must be logged in to view your books.');
-      setLoading(true);
-      const myBooks = await getUserBooks(user.uid);
-      setSearchResults(myBooks);
-    } catch (err) {
-      setError(err.message);
-      setSearchResults([]);
-    } finally {
-      setLoading(false);
-    }
-  };
 import { initializeDatabase } from '../firebase/initData';
 
 
@@ -153,6 +139,21 @@ export function BookProvider({ children }) {
         publishYear: []
       };
       searchBooks('', resetFiltersObj);
+    }
+  };
+
+  // Show only books added by the current user
+  const showMyBooks = async () => {
+    try {
+      if (!user) throw new Error('You must be logged in to view your books.');
+      setLoading(true);
+      const myBooks = await getUserBooks(user.uid);
+      setSearchResults(myBooks);
+    } catch (err) {
+      setError(err.message);
+      setSearchResults([]);
+    } finally {
+      setLoading(false);
     }
   };
   

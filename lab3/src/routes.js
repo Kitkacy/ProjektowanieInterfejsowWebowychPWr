@@ -4,7 +4,7 @@ import App from './root';
 // Lazy load route components for better performance
 const Home = lazy(() => import('./routes/home'));
 const New = lazy(() => import('./routes/new'));
-const Login = lazy(() => import('./routes/login'));
+
 
 // Add a loading component for suspense fallback
 const Loading = () => {
@@ -32,14 +32,7 @@ export default [
           </Suspense>
         )
       },
-      {
-        path: '/login',
-        element: (
-          <Suspense fallback={<Loading />}>
-            <Login />
-          </Suspense>
-        )
-      }
+      // Login route removed: Google-only authentication
     ]
   }
 ];

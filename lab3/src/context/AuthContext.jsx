@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { getAuth, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from '../firebase/config';
 
 const AuthContext = createContext();
@@ -17,22 +17,7 @@ export function AuthProvider({ children }) {
     return unsubscribe;
   }, []);
 
-  const signup = async (email, password, displayName) => {
-    setError(null);
-    const result = await createUserWithEmailAndPassword(auth, email, password);
-    if (displayName) {
-      await result.user.updateProfile({ displayName });
-    }
-    setUser(result.user);
-    return result.user;
-  };
 
-  const login = async (email, password) => {
-    setError(null);
-    const result = await signInWithEmailAndPassword(auth, email, password);
-    setUser(result.user);
-    return result.user;
-  };
 
   const loginWithGoogle = async () => {
     setError(null);
@@ -51,7 +36,7 @@ export function AuthProvider({ children }) {
   const clearError = () => setError(null);
 
   return (
-    <AuthContext.Provider value={{ user, loading, error, signup, login, loginWithGoogle, logout, clearError }}>
+    <AuthContext.Provider value={{ user, loading, error, loginWithGoogle, logout, clearError }}>
       {children}
     </AuthContext.Provider>
   );

@@ -4,7 +4,9 @@ import { SearchBar } from "../components/SearchBar";
 import { SearchResults } from "../components/SearchResults";
 import { useBooks } from "../context/BookContext";
 
+
 import { useAuth } from "../context/AuthContext";
+import { GoogleLoginButton } from "../components/GoogleLoginButton";
 
 export function Welcome() {
   const { featuredBooks, loading, error, showMyBooks } = useBooks();
@@ -32,9 +34,7 @@ export function Welcome() {
               <li><a href="#" className="hover:underline">About</a></li>
               <li><a href="#" className="hover:underline">Contact</a></li>
               <li>
-                <button className="bg-white text-green-700 px-3 py-1 rounded-lg hover:bg-green-50">
-                  Login
-                </button>
+                <GoogleLoginButton />
               </li>
             </ul>
           </nav>
