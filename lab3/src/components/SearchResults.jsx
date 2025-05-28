@@ -1,8 +1,48 @@
+import { useState } from 'react';
 import { useBooks } from '../context/BookContext';
+import { useAuth } from '../context/AuthContext';
+import { EditBookModal } from './EditBookModal';
 
 export function SearchResults() {
   const { searchResults, filters, removeBook, loading, error } = useBooks();
+  const { user } = useAuth();
+  const [editingBook, setEditingBook] = useState(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   
+  const handleEditBook = (book) => {
+    setEditingBook(book);
+    setIsEditModalOpen(true);
+  };
+
+  const handleEditModalClose = () => {
+    setIsEditModalOpen(false);
+    setEditingBook(null);
+  };
+
+  const handleDeleteBook = async (book) => {
+    if (!user) {
+      alert('You must be logged in to delete a book.');
+      return;
+    }
+    
+    if (book.ownerId !== user.uid) {
+      alert('You can only delete books you own.');
+      return;
+    }
+
+    if (window.confirm(`Are you sure you want to delete "${book.title}"?`)) {
+      try {
+        await removeBook(book.id);
+      } catch (error) {
+        alert(error.message);
+      }
+    }
+  };
+
+  const isOwner = (book) => {
+    return user && book.ownerId === user.uid;
+  };
+
   if (loading) {
     return (
       <div className="mt-6 w-full max-w-4xl mx-auto">
@@ -69,18 +109,36 @@ export function SearchResults() {
               <span className="font-bold text-lg text-green-600">${book.price.toFixed(2)}</span>
               <div className="flex gap-2 mt-2">
                 <button className="text-green-600 text-sm hover:underline">View Details</button>
-                <button className="text-green-600 text-sm hover:underline">Edit</button>
-                <button 
-                  className="text-red-600 text-sm hover:underline"
-                  onClick={() => removeBook(book.id)}
-                >
-                  Delete
-                </button>
+                {isOwner(book) && (
+                  <>
+                    <button 
+                      className="text-blue-600 text-sm hover:underline"
+                      onClick={() => handleEditBook(book)}
+                    >
+                      Edit
+                    </button>
+                    <button 
+                      className="text-red-600 text-sm hover:underline"
+                      onClick={() => handleDeleteBook(book)}
+                    >
+                      Delete
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           </div>
         ))}
       </div>
+      
+      <EditBookModal
+        book={editingBook}
+        isOpen={isEditModalOpen}
+        onClose={handleEditModalClose}
+        onSuccess={() => {
+          // Optional: You can add a success message or refresh logic here
+        }}
+      />
     </div>
   );
 }

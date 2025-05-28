@@ -4,6 +4,7 @@ import {
   getAllBooks, 
   addBook as addBookToFirestore, 
   deleteBook as deleteBookFromFirestore,
+  updateBook as updateBookInFirestore,
   searchBooks as searchBooksInFirestore,
   getUserBooks
 } from '../firebase/firestoreService';
@@ -74,10 +75,47 @@ export function BookProvider({ children }) {
   
   const removeBook = async (id) => {
     try {
+      if (!user) throw new Error('You must be logged in to delete a book.');
+      
+      // Check if user owns the book
+      const book = books.find(b => b.id === id) || searchResults.find(b => b.id === id);
+      if (book && book.ownerId !== user.uid) {
+        throw new Error('You can only delete books you own.');
+      }
+      
       await deleteBookFromFirestore(id);
       setBooks(prevBooks => prevBooks.filter(book => book.id !== id));
+      setSearchResults(prevResults => prevResults.filter(book => book.id !== id));
     } catch (err) {
       console.error('Error removing book:', err);
+      setError(err.message);
+      throw err;
+    }
+  };
+
+  const updateBook = async (id, bookData) => {
+    try {
+      if (!user) throw new Error('You must be logged in to edit a book.');
+      
+      // Check if user owns the book
+      const book = books.find(b => b.id === id) || searchResults.find(b => b.id === id);
+      if (book && book.ownerId !== user.uid) {
+        throw new Error('You can only edit books you own.');
+      }
+      
+      const updatedBook = await updateBookInFirestore(id, bookData);
+      
+      // Update the book in both books and searchResults arrays
+      setBooks(prevBooks => 
+        prevBooks.map(book => book.id === id ? { ...book, ...updatedBook } : book)
+      );
+      setSearchResults(prevResults => 
+        prevResults.map(book => book.id === id ? { ...book, ...updatedBook } : book)
+      );
+      
+      return updatedBook;
+    } catch (err) {
+      console.error('Error updating book:', err);
       setError(err.message);
       throw err;
     }
@@ -173,6 +211,7 @@ export function BookProvider({ children }) {
         filterOptions,
         addBook, 
         removeBook,
+        updateBook,
         showMyBooks,
         DEFAULT_COVER
       }}
