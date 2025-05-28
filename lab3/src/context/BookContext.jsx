@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
 import { useAuth } from './AuthContext';
 import { 
   getAllBooks, 
@@ -181,7 +181,7 @@ export function BookProvider({ children }) {
   };
 
   // Show only books added by the current user
-  const showMyBooks = async () => {
+  const showMyBooks = useCallback(async () => {
     try {
       if (!user) throw new Error('You must be logged in to view your books.');
       setLoading(true);
@@ -193,29 +193,38 @@ export function BookProvider({ children }) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user]);
+
+  // Memoize the provider value to prevent unnecessary re-renders
+  const contextValue = useMemo(() => ({
+    books, 
+    featuredBooks: books.slice(0, 3),
+    searchResults, 
+    loading,
+    error,
+    searchBooks,
+    filters,
+    updateFilters,
+    applyFilters,
+    resetFilters,
+    filterOptions,
+    addBook, 
+    removeBook,
+    updateBook,
+    showMyBooks,
+    DEFAULT_COVER
+  }), [
+    books, 
+    searchResults, 
+    loading, 
+    error, 
+    filters, 
+    filterOptions,
+    showMyBooks
+  ]);
   
   return (
-    <BookContext.Provider 
-      value={{ 
-        books, 
-        featuredBooks: books.slice(0, 3),
-        searchResults, 
-        loading,
-        error,
-        searchBooks,
-        filters,
-        updateFilters,
-        applyFilters,
-        resetFilters,
-        filterOptions,
-        addBook, 
-        removeBook,
-        updateBook,
-        showMyBooks,
-        DEFAULT_COVER
-      }}
-    >
+    <BookContext.Provider value={contextValue}>
       {children}
     </BookContext.Provider>
   );

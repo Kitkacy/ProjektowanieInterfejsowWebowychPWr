@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useBooks } from '../context/BookContext';
 
 export function EditBookModal({ book, isOpen, onClose, onSuccess }) {
-  const { updateBook, filterOptions } = useBooks();
+  const { updateBook } = useBooks();
   const [submitting, setSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [bookData, setBookData] = useState({
@@ -17,9 +17,11 @@ export function EditBookModal({ book, isOpen, onClose, onSuccess }) {
     language: 'English',
     format: 'Paperback'
   });
+  const [isInitialized, setIsInitialized] = useState(false);
 
+  // Initialize form data only when modal opens with a new book
   useEffect(() => {
-    if (book) {
+    if (isOpen && book && !isInitialized) {
       setBookData({
         title: book.title || '',
         author: book.author || '',
@@ -32,10 +34,19 @@ export function EditBookModal({ book, isOpen, onClose, onSuccess }) {
         language: book.language || 'English',
         format: book.format || 'Paperback'
       });
+      setIsInitialized(true);
+      setErrorMessage(null);
     }
-  }, [book]);
+    
+    // Reset when modal closes
+    if (!isOpen) {
+      setIsInitialized(false);
+      setSubmitting(false);
+      setErrorMessage(null);
+    }
+  }, [isOpen, book, isInitialized]);
 
-  const handleChange = (e) => {
+  const handleChange = useCallback((e) => {
     const { name, value } = e.target;
     setBookData(prev => ({
       ...prev,
@@ -43,7 +54,7 @@ export function EditBookModal({ book, isOpen, onClose, onSuccess }) {
         ? Number(value) 
         : value
     }));
-  };
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

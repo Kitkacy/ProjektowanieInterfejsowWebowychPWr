@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useBooks } from '../context/BookContext';
 import { useAuth } from '../context/AuthContext';
 import { EditBookModal } from './EditBookModal';
@@ -9,17 +9,17 @@ export function SearchResults() {
   const [editingBook, setEditingBook] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   
-  const handleEditBook = (book) => {
+  const handleEditBook = useCallback((book) => {
     setEditingBook(book);
     setIsEditModalOpen(true);
-  };
+  }, []);
 
-  const handleEditModalClose = () => {
+  const handleEditModalClose = useCallback(() => {
     setIsEditModalOpen(false);
     setEditingBook(null);
-  };
+  }, []);
 
-  const handleDeleteBook = async (book) => {
+  const handleDeleteBook = useCallback(async (book) => {
     if (!user) {
       alert('You must be logged in to delete a book.');
       return;
@@ -37,11 +37,11 @@ export function SearchResults() {
         alert(error.message);
       }
     }
-  };
+  }, [user, removeBook]);
 
-  const isOwner = (book) => {
+  const isOwner = useCallback((book) => {
     return user && book.ownerId === user.uid;
-  };
+  }, [user]);
 
   if (loading) {
     return (
