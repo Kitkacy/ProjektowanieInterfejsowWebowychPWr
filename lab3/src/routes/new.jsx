@@ -112,7 +112,7 @@ export default function NewBook() {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg border shadow-sm">
+        <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg border shadow-sm" data-cy="add-book-form">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
             <div>
@@ -126,6 +126,7 @@ export default function NewBook() {
                 value={bookData.title}
                 onChange={handleChange}
                 className="w-full p-2 border rounded focus:ring focus:ring-blue-200 focus:border-blue-500 text-gray-900"
+                data-cy="book-title-input"
                 required
               />
             </div>
@@ -142,6 +143,7 @@ export default function NewBook() {
                 value={bookData.author}
                 onChange={handleChange}
                 className="w-full p-2 border rounded focus:ring focus:ring-blue-200 focus:border-blue-500 text-gray-900"
+                data-cy="book-author-input"
                 required
               />
             </div>
@@ -159,6 +161,7 @@ export default function NewBook() {
                 value={bookData.price}
                 onChange={handleChange}
                 className="w-full p-2 border rounded focus:ring focus:ring-blue-200 focus:border-blue-500 text-gray-900"
+                data-cy="book-price-input"
                 required
               />
             </div>
@@ -174,6 +177,7 @@ export default function NewBook() {
                 value={bookData.condition}
                 onChange={handleChange}
                 className="w-full p-2 border rounded focus:ring focus:ring-blue-200 focus:border-blue-500 text-gray-900"
+                data-cy="book-condition-select"
               >
                 {filterOptions.conditions.map(condition => (
                   <option key={condition} value={condition}>
@@ -193,6 +197,7 @@ export default function NewBook() {
                 value={bookData.category}
                 onChange={handleChange}
                 className="w-full p-2 border rounded focus:ring focus:ring-blue-200 focus:border-blue-500 text-gray-900"
+                data-cy="book-category-select"
               >
                 {filterOptions.categories.map(category => (
                   <option key={category} value={category}>
@@ -282,6 +287,7 @@ export default function NewBook() {
               onClick={() => navigate('/')}
               className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100"
               disabled={submitting}
+              data-cy="cancel-button"
             >
               Cancel
             </button>
@@ -289,6 +295,7 @@ export default function NewBook() {
               type="submit"
               className={`px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 flex items-center ${submitting ? 'opacity-70 cursor-not-allowed' : ''}`}
               disabled={submitting}
+              data-cy="submit-book-button"
             >
               {submitting ? (
                 <>

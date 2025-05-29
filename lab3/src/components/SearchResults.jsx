@@ -45,7 +45,7 @@ export function SearchResults() {
 
   if (loading) {
     return (
-      <div className="mt-6 w-full max-w-4xl mx-auto">
+      <div className="mt-6 w-full max-w-4xl mx-auto" data-cy="search-loading">
         <div className="p-4 text-center">
           <div className="animate-pulse">
             <div className="h-4 bg-gray-200 rounded w-1/4 mx-auto mb-4"></div>
@@ -83,43 +83,45 @@ export function SearchResults() {
     filters.priceRange.max < 100;
   
   return (
-    <div className="mt-6 w-full max-w-4xl mx-auto">
+    <div className="mt-6 w-full max-w-4xl mx-auto" data-cy="search-results">
       <div className="flex justify-between items-center mb-4">
-        <h3 className="text-xl font-semibold">Search Results ({searchResults.length})</h3>
+        <h3 className="text-xl font-semibold" data-cy="search-results-count">Search Results ({searchResults.length})</h3>
         {hasActiveFilters && (
-          <span className="text-sm text-green-600">Filters applied</span>
+          <span className="text-sm text-green-600" data-cy="filters-applied">Filters applied</span>
         )}
       </div>
       
-      <div className="bg-white rounded-lg border shadow-sm">
+      <div className="bg-white rounded-lg border shadow-sm" data-cy="search-results-list">
         {searchResults.map(book => (
-          <div key={book.id} className="border-b p-4 flex justify-between items-center">
+          <div key={book.id} className="border-b p-4 flex justify-between items-center" data-cy="book-item">
             <div>
-              <h4 className="font-medium">{book.title}</h4>
-              <p className="text-gray-600 text-sm">{book.author}</p>
+              <h4 className="font-medium" data-cy="book-title">{book.title}</h4>
+              <p className="text-gray-600 text-sm" data-cy="book-author">{book.author}</p>
               <div className="flex gap-2 text-xs mt-1">
-                <span className="bg-gray-100 px-2 py-1 rounded-lg">{book.category}</span>
-                <span className="bg-gray-100 px-2 py-1 rounded-lg">{book.condition}</span>
-                <span className="bg-gray-100 px-2 py-1 rounded-lg">{book.format}</span>
-                <span className="bg-gray-100 px-2 py-1 rounded-lg">{book.publishYear}</span>
+                <span className="bg-gray-100 px-2 py-1 rounded-lg" data-cy="book-category">{book.category}</span>
+                <span className="bg-gray-100 px-2 py-1 rounded-lg" data-cy="book-condition">{book.condition}</span>
+                <span className="bg-gray-100 px-2 py-1 rounded-lg" data-cy="book-format">{book.format}</span>
+                <span className="bg-gray-100 px-2 py-1 rounded-lg" data-cy="book-year">{book.publishYear}</span>
               </div>
-              <p className="text-gray-500 text-xs mt-1">{book.pages} pages</p>
+              <p className="text-gray-500 text-xs mt-1" data-cy="book-pages">{book.pages} pages</p>
             </div>
             <div className="flex flex-col items-end">
-              <span className="font-bold text-lg text-green-600">${book.price.toFixed(2)}</span>
+              <span className="font-bold text-lg text-green-600" data-cy="book-price">${book.price.toFixed(2)}</span>
               <div className="flex gap-2 mt-2">
-                <button className="text-green-600 text-sm hover:underline">View Details</button>
+                <button className="text-green-600 text-sm hover:underline" data-cy="view-details-button">View Details</button>
                 {isOwner(book) && (
                   <>
                     <button 
                       className="text-blue-600 text-sm hover:underline"
                       onClick={() => handleEditBook(book)}
+                      data-cy="edit-book-button"
                     >
                       Edit
                     </button>
                     <button 
                       className="text-red-600 text-sm hover:underline"
                       onClick={() => handleDeleteBook(book)}
+                      data-cy="delete-book-button"
                     >
                       Delete
                     </button>

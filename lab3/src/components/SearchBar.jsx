@@ -21,6 +21,7 @@ export function SearchBar() {
       <form onSubmit={handleSearch} className="w-full max-w-xl mx-auto">
         <div className="flex items-center border rounded-lg overflow-hidden">
           <input
+            data-cy="search-input"
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
@@ -28,6 +29,7 @@ export function SearchBar() {
             className="w-full py-2 px-4 focus:outline-none rounded-l-lg text-gray-900"
           />
           <button 
+            data-cy="filter-toggle-button"
             type="button"
             onClick={toggleFilters}
             className="px-2 py-2 text-gray-500 hover:text-green-600"
@@ -38,6 +40,7 @@ export function SearchBar() {
             </svg>
           </button>
           <button 
+            data-cy="search-button"
             type="submit"
             className="bg-green-600 text-white px-4 py-2 hover:bg-green-700 rounded-r-lg"
           >

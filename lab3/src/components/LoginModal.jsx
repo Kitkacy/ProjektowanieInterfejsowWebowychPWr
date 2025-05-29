@@ -98,6 +98,7 @@ export function LoginModal({ isOpen, onClose }) {
           onClick={handleGoogleLogin}
           disabled={loading}
           className="w-full mb-4 px-4 py-2 border border-gray-300 rounded-md shadow-sm bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 disabled:opacity-50 flex items-center justify-center gap-2"
+          data-cy="google-login-button"
         >
           <svg className="w-5 h-5" viewBox="0 0 24 24">
             <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -134,6 +135,7 @@ export function LoginModal({ isOpen, onClose }) {
                 disabled={loading}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 disabled:bg-gray-100 text-gray-900"
                 placeholder="Your name"
+                data-cy="signup-name-input"
               />
             </div>
           )}
@@ -152,6 +154,7 @@ export function LoginModal({ isOpen, onClose }) {
               disabled={loading}
               className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 disabled:bg-gray-100 text-gray-900"
               placeholder="your.email@example.com"
+              data-cy="email-input"
             />
           </div>
 
@@ -170,6 +173,7 @@ export function LoginModal({ isOpen, onClose }) {
               minLength={6}
               className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 disabled:bg-gray-100 text-gray-900"
               placeholder="Minimum 6 characters"
+              data-cy="password-input"
             />
           </div>
 
@@ -197,6 +201,7 @@ export function LoginModal({ isOpen, onClose }) {
             type="submit"
             disabled={loading}
             className="w-full px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:opacity-50"
+            data-cy="email-submit-button"
           >
             {loading ? 'Processing...' : (isSignUp ? 'Create Account' : 'Sign In')}
           </button>

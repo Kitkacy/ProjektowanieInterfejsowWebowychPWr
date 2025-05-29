@@ -20,12 +20,12 @@ export function Welcome() {
 
   return (
     <main className="flex flex-col items-center">
-      <header className="w-full bg-green-700 text-white p-4 flex justify-between items-center">
+      <header className="w-full bg-green-700 text-white p-4 flex justify-between items-center" data-cy="header">
         <div className="flex items-center gap-2 max-w-6xl mx-auto w-full">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
             <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.38A7.968 7.968 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.969 7.969 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
           </svg>
-          <h1 className="text-2xl font-bold">Books4Cash.io</h1>
+          <h1 className="text-2xl font-bold" data-cy="site-title">Books4Cash.io</h1>
           
           <nav className="ml-auto">
             <ul className="flex gap-6 items-center">
@@ -41,13 +41,14 @@ export function Welcome() {
         </div>
       </header>
 
-      <div className="w-full bg-gray-50 p-12 text-center rounded-lg mt-4 mb-4">
+      <div className="w-full bg-gray-50 p-12 text-center rounded-lg mt-4 mb-4" data-cy="hero-section">
         <h2 className="text-4xl font-bold mb-4">Turn Your Books Into Cash</h2>
         <p className="text-xl text-gray-700 mb-6">Buy and sell used books using our military-grade internet technology AI+™</p>
         <div className="flex justify-center">
           <Link 
             to="/new" 
             className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700"
+            data-cy="add-new-book-hero-button"
           >
             Add New Book
           </Link>
@@ -61,6 +62,7 @@ export function Welcome() {
             <button
               onClick={handleShowMyBooks}
               className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 whitespace-nowrap mt-4 md:mt-0"
+              data-cy="show-my-books-button"
             >
               Show My Books
             </button>
@@ -74,14 +76,14 @@ export function Welcome() {
       <div className="max-w-6xl w-full p-8">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-semibold">Featured Books</h2>
-          <Link to="/new" className="text-green-600 hover:underline flex items-center gap-1">
+          <Link to="/new" className="text-green-600 hover:underline flex items-center gap-1" data-cy="add-new-book-featured-button">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
               <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
             </svg>
             Add New Book
           </Link>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6" data-cy="featured-books-grid">
           {featuredBooks.map((book) => (
             <div key={book.id} className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md flex flex-col">
               <div className="h-64 bg-gray-100">
