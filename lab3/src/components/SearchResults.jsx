@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { EditBookModal } from './EditBookModal';
 
 export function SearchResults() {
-  const { searchResults, filters, removeBook, loading, error } = useBooks();
+  const { searchResults, filters, removeBook, loading, error, addToFavorites, removeFromFavorites, isFavoriteBook } = useBooks();
   const { user } = useAuth();
   const [editingBook, setEditingBook] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -42,6 +42,23 @@ export function SearchResults() {
   const isOwner = useCallback((book) => {
     return user && book.ownerId === user.uid;
   }, [user]);
+
+  const handleFavoriteToggle = useCallback(async (book) => {
+    if (!user) {
+      alert('You must be logged in to add favorites.');
+      return;
+    }
+
+    try {
+      if (isFavoriteBook(book.id)) {
+        await removeFromFavorites(book.id);
+      } else {
+        await addToFavorites(book.id);
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  }, [user, addToFavorites, removeFromFavorites, isFavoriteBook]);
 
   if (loading) {
     return (
@@ -109,6 +126,20 @@ export function SearchResults() {
               <span className="font-bold text-lg text-green-600" data-cy="book-price">${book.price.toFixed(2)}</span>
               <div className="flex gap-2 mt-2">
                 <button className="text-green-600 text-sm hover:underline" data-cy="view-details-button">View Details</button>
+                {user && (
+                  <button
+                    onClick={() => handleFavoriteToggle(book)}
+                    className={`text-sm hover:underline ${
+                      isFavoriteBook(book.id) 
+                        ? 'text-red-500' 
+                        : 'text-gray-600'
+                    }`}
+                    data-cy="favorite-button"
+                    title={isFavoriteBook(book.id) ? 'Remove from favorites' : 'Add to favorites'}
+                  >
+                    {isFavoriteBook(book.id) ? '♥ Favorite' : '♡ Add to Favorites'}
+                  </button>
+                )}
                 {isOwner(book) && (
                   <>
                     <button 

@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback, useMemo, useReducer } from 'react';
 import { useAuth } from './AuthContext';
 import { 
   getAllBooks, 
@@ -6,9 +6,14 @@ import {
   deleteBook as deleteBookFromFirestore,
   updateBook as updateBookInFirestore,
   searchBooks as searchBooksInFirestore,
-  getUserBooks
+  getUserBooks,
+  addToFavorites,
+  removeFromFavorites,
+  getUserFavorites,
+  getUserFavoriteIds
 } from '../firebase/firestoreService';
 import { initializeDatabase } from '../firebase/initData';
+import { favoritesReducer, initialFavoritesState, FAVORITES_ACTIONS } from '../reducers/favoritesReducer';
 
 
 const DEFAULT_COVER = "/images/covers/book-default-cover.jpg";
@@ -27,6 +32,10 @@ export function BookProvider({ children }) {
     priceRange: { min: 0, max: 100 },
     publishYear: []
   });
+  
+  // Use useReducer for favorites management
+  const [favoritesState, favoritesDispatch] = useReducer(favoritesReducer, initialFavoritesState);
+  
   const { user } = useAuth();
 
   const filterOptions = {
@@ -53,6 +62,85 @@ export function BookProvider({ children }) {
 
     initializeApp();
   }, []);
+
+  useEffect(() => {
+    const loadUserFavorites = async () => {
+      if (user) {
+        try {
+          favoritesDispatch({ type: FAVORITES_ACTIONS.SET_LOADING, payload: true });
+          const favoriteBookIds = await getUserFavoriteIds(user.uid);
+          favoritesDispatch({ type: FAVORITES_ACTIONS.SET_FAVORITE_IDS, payload: favoriteBookIds });
+        } catch (err) {
+          console.error('Error loading user favorites:', err);
+          favoritesDispatch({ type: FAVORITES_ACTIONS.SET_ERROR, payload: err.message });
+        } finally {
+          favoritesDispatch({ type: FAVORITES_ACTIONS.SET_LOADING, payload: false });
+        }
+      } else {
+        favoritesDispatch({ type: FAVORITES_ACTIONS.RESET_FAVORITES });
+      }
+    };
+
+    loadUserFavorites();
+  }, [user]);
+
+  const addToFavoritesHandler = async (bookId) => {
+    try {
+      if (!user) throw new Error('You must be logged in to add favorites.');
+      
+      favoritesDispatch({ type: FAVORITES_ACTIONS.SET_LOADING, payload: true });
+      await addToFavorites(user.uid, bookId);
+      favoritesDispatch({ type: FAVORITES_ACTIONS.ADD_FAVORITE, payload: bookId });
+    } catch (err) {
+      console.error('Error adding to favorites:', err);
+      favoritesDispatch({ type: FAVORITES_ACTIONS.SET_ERROR, payload: err.message });
+      setError(err.message);
+      throw err;
+    } finally {
+      favoritesDispatch({ type: FAVORITES_ACTIONS.SET_LOADING, payload: false });
+    }
+  };
+
+  const removeFromFavoritesHandler = async (bookId) => {
+    try {
+      if (!user) throw new Error('You must be logged in to remove favorites.');
+      
+      favoritesDispatch({ type: FAVORITES_ACTIONS.SET_LOADING, payload: true });
+      await removeFromFavorites(user.uid, bookId);
+      favoritesDispatch({ type: FAVORITES_ACTIONS.REMOVE_FAVORITE, payload: bookId });
+    } catch (err) {
+      console.error('Error removing from favorites:', err);
+      favoritesDispatch({ type: FAVORITES_ACTIONS.SET_ERROR, payload: err.message });
+      setError(err.message);
+      throw err;
+    } finally {
+      favoritesDispatch({ type: FAVORITES_ACTIONS.SET_LOADING, payload: false });
+    }
+  };
+
+  const showFavorites = useCallback(async () => {
+    try {
+      if (!user) throw new Error('You must be logged in to view favorites.');
+      setLoading(true);
+      favoritesDispatch({ type: FAVORITES_ACTIONS.SET_LOADING, payload: true });
+      
+      const favoriteBooks = await getUserFavorites(user.uid);
+      favoritesDispatch({ type: FAVORITES_ACTIONS.SET_FAVORITES, payload: favoriteBooks });
+      setSearchResults(favoriteBooks);
+    } catch (err) {
+      const errorMessage = err.message;
+      setError(errorMessage);
+      favoritesDispatch({ type: FAVORITES_ACTIONS.SET_ERROR, payload: errorMessage });
+      setSearchResults([]);
+    } finally {
+      setLoading(false);
+      favoritesDispatch({ type: FAVORITES_ACTIONS.SET_LOADING, payload: false });
+    }
+  }, [user]);
+
+  const isFavoriteBook = useCallback((bookId) => {
+    return favoritesState.favoriteIds.includes(bookId);
+  }, [favoritesState.favoriteIds]);
 
   const addBook = async (book) => {
     try {
@@ -207,6 +295,15 @@ export function BookProvider({ children }) {
     removeBook,
     updateBook,
     showMyBooks,
+    favorites: favoritesState.favorites,
+    favoriteIds: favoritesState.favoriteIds,
+    favoritesCount: favoritesState.favoriteIds.length,
+    favoritesLoading: favoritesState.loading,
+    favoritesError: favoritesState.error,
+    addToFavorites: addToFavoritesHandler,
+    removeFromFavorites: removeFromFavoritesHandler,
+    showFavorites,
+    isFavoriteBook,
     DEFAULT_COVER
   }), [
     books, 
@@ -215,7 +312,13 @@ export function BookProvider({ children }) {
     error, 
     filters, 
     filterOptions,
-    showMyBooks
+    showMyBooks,
+    favoritesState.favorites,
+    favoritesState.favoriteIds,
+    favoritesState.loading,
+    favoritesState.error,
+    showFavorites,
+    isFavoriteBook
   ]);
   
   return (

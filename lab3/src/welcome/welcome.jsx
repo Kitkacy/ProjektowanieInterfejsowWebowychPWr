@@ -9,12 +9,18 @@ import { useAuth } from "../context/AuthContext";
 import { AuthButton } from "../components/AuthButton";
 
 export function Welcome() {
-  const { featuredBooks, loading, error, showMyBooks } = useBooks();
+  const { featuredBooks, loading, error, showMyBooks, showFavorites, favoritesCount } = useBooks();
   const { user } = useAuth();
 
   const handleShowMyBooks = async () => {
     if (showMyBooks) {
       await showMyBooks();
+    }
+  };
+
+  const handleShowFavorites = async () => {
+    if (showFavorites) {
+      await showFavorites();
     }
   };
 
@@ -33,6 +39,14 @@ export function Welcome() {
               <li><a href="#" className="hover:underline">Sell</a></li>
               <li><a href="#" className="hover:underline">About</a></li>
               <li><a href="#" className="hover:underline">Contact</a></li>
+              {user && (
+                <li className="flex items-center gap-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
+                  </svg>
+                  <span className="text-sm" data-cy="favorites-count">{favoritesCount}</span>
+                </li>
+              )}
               <li>
                 <AuthButton />
               </li>
@@ -59,15 +73,27 @@ export function Welcome() {
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
           <SearchBar />
           {user ? (
-            <button
-              onClick={handleShowMyBooks}
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 whitespace-nowrap mt-4 md:mt-0"
-              data-cy="show-my-books-button"
-            >
-              Show My Books
-            </button>
+            <div className="flex gap-2 mt-4 md:mt-0">
+              <button
+                onClick={handleShowMyBooks}
+                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 whitespace-nowrap"
+                data-cy="show-my-books-button"
+              >
+                Show My Books
+              </button>
+              <button
+                onClick={handleShowFavorites}
+                className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 whitespace-nowrap flex items-center gap-1"
+                data-cy="show-favorites-button"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
+                </svg>
+                Favorites ({favoritesCount})
+              </button>
+            </div>
           ) : (
-            <span className="text-gray-500 text-sm mt-4 md:mt-0">Log in to see your books</span>
+            <span className="text-gray-500 text-sm mt-4 md:mt-0">Log in to see your books and favorites</span>
           )}
         </div>
         <SearchResults />

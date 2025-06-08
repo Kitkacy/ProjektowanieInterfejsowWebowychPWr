@@ -17,11 +17,14 @@ import {
   deleteDoc, 
   query, 
   where,
-  updateDoc
+  updateDoc,
+  setDoc,
+  getDoc
 } from 'firebase/firestore';
 import { db } from './config.js';
 
 const BOOKS_COLLECTION = 'books';
+const FAVORITES_COLLECTION = 'favorites';
 
 export const getAllBooks = async () => {
   try {
@@ -120,5 +123,69 @@ export const searchBooks = async (searchTerm, filters) => {
   } catch (error) {
     console.error('Error searching books:', error);
     throw error;
+  }
+};
+
+export const addToFavorites = async (userId, bookId) => {
+  try {
+    const favoriteDocRef = doc(db, FAVORITES_COLLECTION, `${userId}_${bookId}`);
+    await setDoc(favoriteDocRef, {
+      userId,
+      bookId,
+      addedAt: new Date()
+    });
+    return true;
+  } catch (error) {
+    console.error('Error adding to favorites:', error);
+    throw error;
+  }
+};
+
+export const removeFromFavorites = async (userId, bookId) => {
+  try {
+    const favoriteDocRef = doc(db, FAVORITES_COLLECTION, `${userId}_${bookId}`);
+    await deleteDoc(favoriteDocRef);
+    return true;
+  } catch (error) {
+    console.error('Error removing from favorites:', error);
+    throw error;
+  }
+};
+
+export const getUserFavorites = async (userId) => {
+  try {
+    const favoritesCollection = collection(db, FAVORITES_COLLECTION);
+    const q = query(favoritesCollection, where('userId', '==', userId));
+    const snapshot = await getDocs(q);
+    const favoriteBookIds = snapshot.docs.map(doc => doc.data().bookId);
+    
+    const books = await getAllBooks();
+    return books.filter(book => favoriteBookIds.includes(book.id));
+  } catch (error) {
+    console.error('Error getting user favorites:', error);
+    throw error;
+  }
+};
+
+export const isFavorite = async (userId, bookId) => {
+  try {
+    const favoriteDocRef = doc(db, FAVORITES_COLLECTION, `${userId}_${bookId}`);
+    const docSnap = await getDoc(favoriteDocRef);
+    return docSnap.exists();
+  } catch (error) {
+    console.error('Error checking if favorite:', error);
+    return false;
+  }
+};
+
+export const getUserFavoriteIds = async (userId) => {
+  try {
+    const favoritesCollection = collection(db, FAVORITES_COLLECTION);
+    const q = query(favoritesCollection, where('userId', '==', userId));
+    const snapshot = await getDocs(q);
+    return snapshot.docs.map(doc => doc.data().bookId);
+  } catch (error) {
+    console.error('Error getting user favorite IDs:', error);
+    return [];
   }
 };
