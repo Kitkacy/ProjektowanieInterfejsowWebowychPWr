@@ -33,8 +33,29 @@ export function BookProvider({ children }) {
     publishYear: []
   });
   
-  // Use useReducer for favorites management
   const [favoritesState, favoritesDispatch] = useReducer(favoritesReducer, initialFavoritesState);
+
+  useEffect(() => {
+    const storedFavorites = localStorage.getItem('favoritesState');
+    if (storedFavorites) {
+      try {
+        const parsed = JSON.parse(storedFavorites);
+        if (parsed && typeof parsed === 'object') {
+          favoritesDispatch({ type: FAVORITES_ACTIONS.SET_FAVORITE_IDS, payload: parsed.favoriteIds || [] });
+          favoritesDispatch({ type: FAVORITES_ACTIONS.SET_FAVORITES, payload: parsed.favorites || [] });
+        }
+      } catch (e) {
+        console.error('Error parsing favorites from localStorage:', e);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('favoritesState', JSON.stringify({
+      favorites: favoritesState.favorites,
+      favoriteIds: favoritesState.favoriteIds
+    }));
+  }, [favoritesState.favorites, favoritesState.favoriteIds]);
   
   const { user } = useAuth();
 
